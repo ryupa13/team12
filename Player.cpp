@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "Player.h"
 #include "GraphFactory.h"
+#include "Renderer.h"
 
 //	初期化処理
 void Player::Start()
@@ -9,17 +10,17 @@ void Player::Start()
 	_size = Vector2(32, 32);
 	_radius = 16;
 	_position = Vector2(40, 40);
+	_rectPosition = Vector2(0, 64);
 	_velocity = Vector2(0, 0);
+	_state = State::Alive;
+	_kind = Kind::Player;
 }
 
 //	描画
 void Player::Render()
 {
 	//	プレイヤーを描画
-	DrawRectGraph(static_cast<int>(_position.x),
-		static_cast<int>(_position.y), 0, 64,
-		static_cast<int>(_size.x),
-		static_cast<int>(_size.y), _grp, TRUE);
+	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
 }
 
 //	更新
@@ -29,7 +30,7 @@ void Player::Update()
 	int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
 	//	移動量をクリア	
-	_velocity = Vector2(0, 0);
+	_velocity.Zero();
 
 	// 上キーで前に進む
 	if (key & PAD_INPUT_UP) {
@@ -50,6 +51,17 @@ void Player::Update()
 	if (key & PAD_INPUT_LEFT) {
 		_velocity.x -= 2;
 	}
+}
+
+//　ヒット通知
+void Player::Hit()
+{
+
+}
+
+void Player::Hit(bool hitX, bool hitY)
+{
+	UpdatePosition(hitX, hitY);
 }
 
 //	解放

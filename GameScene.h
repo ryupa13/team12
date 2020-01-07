@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "TileMap.h"
-#include "Player.h"
+#include "GameObject.h"
 
 //ƒQ[ƒ€‰æ–ÊƒV[ƒ“
 class GameScene :public BaseScene
@@ -19,5 +19,5 @@ private:
 	//ƒQ[ƒ€‚Ì”wŒi‰æ‘œ
 	int _gameImage;
 	TileMap _tileMap;
-	Player _player;
+	GameObject* _player;
 };

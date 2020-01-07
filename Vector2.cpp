@@ -69,3 +69,8 @@ Vector2 Vector2::Normalized()
 {
 	return{ x / Magnitude() , y / Magnitude() };
 }
+
+void Vector2::Zero()
+{
+	x = 0; y = 0;
+}

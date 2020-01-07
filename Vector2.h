@@ -38,6 +38,9 @@ public:
 	//	ƒxƒNƒgƒ‹‚Ì³‹K‰»
 	Vector2 Normalized();
 
+	//0‚É‚·‚é
+	void Zero();
+
 public:
 	float x;
 	float y;
