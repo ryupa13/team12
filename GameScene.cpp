@@ -6,19 +6,19 @@
 #include "GameObjectManager.h"
 #include "Enemy.h"
 #include "SmallEnemy.h"
+#include "TileMap.h"
 
 void GameScene::Initialize()
 {
 	//タイトルの背景の画像読み込み
 	_gameImage = GraphFactory::Instance().LoadGraph("img\\pipo-battlebg001b.jpg");
+	TileMap::Instance().Start();
 
-	_tileMap.Start();
-	_player = new Player();
 	GameObjectManager::Instance().Start();
-	GameObjectManager::Instance().Add(_player);
-	GameObjectManager::Instance().Add(new Enemy(Vector2(1000, 200)));
-	GameObjectManager::Instance().Add(new Enemy(Vector2(1000, 400)));
-	GameObjectManager::Instance().Add(new SmallEnemy(Vector2(400, 200)));
+	GameObjectManager::Instance().Add(new Player());
+	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 11, 64)));
+	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 11, 64)));
+	GameObjectManager::Instance().Add(new SmallEnemy(Vector2(64 * 11, 64)));
 }
 
 void GameScene::Update()
@@ -26,20 +26,19 @@ void GameScene::Update()
 	//タイトル画面を表示する
 	//DrawGraph(0, 0, _gameImage, FALSE);
 
+	//更新
 	GameObjectManager::Instance().Update();
 
-	_tileMap.Render();
+	//描画
+	TileMap::Instance().Render();
 	GameObjectManager::Instance().Render();
 
-	auto info = _tileMap.FindTileHitInfo((*_player).Position(), (*_player).Size(), (*_player).Velocity());
-	GameObjectManager::Instance().TileMapCollision(info._hitX, info._hitY);
+	//タイルマップとの当たり判定
+	GameObjectManager::Instance().TileMapCollision();
 
-	if (info._hitX == 1 || info._hitY == 1)
+	if (GameObjectManager::Instance().GetClearFlag())
 	{
-		if (info._no == 80)
-		{
-			SceneManager::Instance().LoadScene("Clear");
-		}
+		SceneManager::Instance().LoadScene("Clear");
 	}
 
 	//キー入力を更新

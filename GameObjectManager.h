@@ -31,11 +31,12 @@ public:
 	void Add(GameObject* gameObject);
 
 	//タイルマップの衝突判定
-	void TileMapCollision(bool hitX, bool hitY);
+	void TileMapCollision();
 
 	Vector2 GetPlayerPosition();
 	Vector2 GetPlayerSize();
 	Vector2 GetPlayerVelocity();
+	bool GetClearFlag();
 
 private:
 	//プレイヤーとエネミーの当たり判定

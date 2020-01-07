@@ -1,19 +1,4 @@
-﻿  Block.cpp
-  ClearScene.cpp
-  Collision.cpp
-  Enemy.cpp
-  GameObjectManager.cpp
-  GameScene.cpp
-  GraphFactory.cpp
-  Input.cpp
-  Player.cpp
-  Renderer.cpp
-c:\team\renderer.cpp(46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  SceneManager.cpp
+﻿  GameScene.cpp
   SmallEnemy.cpp
-  TileMap.cpp
-  TitleScene.cpp
-  Vector2.cpp
-  WinMain.cpp
   コードを生成中...
   ActionPractice.vcxproj -> C:\team\x64\Debug\ActionPractice.exe

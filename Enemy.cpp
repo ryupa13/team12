@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "Enemy.h"
 #include "GraphFactory.h"
 #include "Renderer.h"
@@ -13,7 +12,12 @@ void Enemy::Start()
 	_radius = 16;
 	_state = State::Alive;
 	_kind = Kind::Enemy;
+	_search = SearchState::Free;
 	_searchPlayerRadius = 320;
+	_stateCount = 0;
+	_hitWallX = false;
+	_hitWallY = false;
+	_rnd = 1234;
 }
 
 //•`‰æ
@@ -27,25 +31,23 @@ void Enemy::Render()
 void Enemy::Update()
 {
 	_playerPosition = GameObjectManager::Instance().GetPlayerPosition();
-
 	if (_playerPosition.x - _position.x <= _searchPlayerRadius && _playerPosition.x - _position.x >= -_searchPlayerRadius)
 	{
 		if (_playerPosition.y - _position.y <= _searchPlayerRadius && _playerPosition.y - _position.y >= -_searchPlayerRadius)
 		{
-			_velocity = _playerPosition - _position;
-			_velocity = _velocity.Normalized();
+			_search = SearchState::Chase;
 		}
 		else
 		{
-			_velocity.Zero();
+			_search = SearchState::Free;
 		}
 	}
 	else
 	{
-		_velocity.Zero();
+		_search = SearchState::Free;
 	}
 
-	_position += _velocity * 3;
+	UpdateVelocity();
 }
 
 //ƒqƒbƒg’Ê’m
@@ -56,7 +58,7 @@ void Enemy::Hit()
 
 void Enemy::Hit(bool hitX, bool hitY)
 {
-
+	UpdatePosition(hitX, hitY);
 }
 
 //‰ð•ú
@@ -64,96 +66,76 @@ void Enemy::Release()
 {
 
 }
-=======
-#include <DxLib.h>
-#include "Enemy.h"
-#include "GraphFactory.h"
 
-void Enemy::Start()
+void Enemy::UpdateVelocity()
 {
-	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip005.png");
-	_size = Vector2(60, 60);
-	_radius = 16;
-	_position = Vector2(64 * 11, 64);
-	_velocity = Vector2(0, 0);
-
-	StateCount = 0;
-	HitWallX = false;
-	HitWallY = false;
-	rnd = 1234;
-}
-
-void Enemy::Render()
-{
-	DrawRectGraph(static_cast<int>(_position.x),
-		static_cast<int>(_position.y), 0, 64,
-		static_cast<int>(_size.x),
-		static_cast<int>(_size.y), _grp, TRUE);
-}
-
-void Enemy::Update()
-{
-	//Ž©—RˆÚ“®
-	switch (StateCount)
+	if (_search == SearchState::Chase)
 	{
-	case 0://Å‰‚ÌˆÚ“®
-		_velocity.x -= 3;
-		if (HitWallX == true)
-		{
-			//‰¡•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
-			StateCount = 1;
-		}
-		break;
-	case 1://•ûŒüŒˆ’è
-		//•Ï”‚Éƒ‰ƒ“ƒ_ƒ€‚È’l‚ðŠi”[
-		rnd = GetRand(1);
-		StateCount = 2;
-		break;
-	case 2:	//cˆÚ“®
-		if (rnd == 0)
-		{
-			_velocity.y += 3;
-		}
-		else if (rnd == 1)
-		{
-			_velocity.y -= 3;
-		}
-
-		if (HitWallY == true)
-		{
-			//c•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
-			StateCount = 3;
-		}
-		break;
-	case 3://•ûŒüŒˆ’è
-		//•Ï”‚Éƒ‰ƒ“ƒ_ƒ€‚È’l‚ðŠi”[
-		rnd = GetRand(1);
-		StateCount = 4;
-		break;
-	case 4: //‰¡ˆÚ“®
-		if (rnd == 0)
-		{
-			_velocity.x += 3;
-		}
-		else if (rnd == 1)
-		{
-			_velocity.x -= 3;
-		}
-
-		//c•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
-		if (HitWallX == true)
-		{
-			StateCount = 1;
-		}
-		break;
-
-	default:
-		break;
+		_playerPosition = GameObjectManager::Instance().GetPlayerPosition();
+		_velocity = _playerPosition - _position;
+		_velocity = _velocity.Normalized();
+		_velocity = _velocity * 3;
 	}
-}
+	else if (_search == SearchState::Free)
+	{
+		//Ž©—RˆÚ“®
+		switch (_stateCount)
+		{
+		case 0://Å‰‚ÌˆÚ“®
+			_velocity.x -= 3;
+			if (_hitWallX == true)
+			{
+				//‰¡•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
+				_stateCount = 1;
+			}
+			break;
+		case 1://•ûŒüŒˆ’è
+			//•Ï”‚Éƒ‰ƒ“ƒ_ƒ€‚È’l‚ðŠi”[
+			_rnd = GetRand(1);
+			_stateCount = 2;
+			break;
+		case 2:	//cˆÚ“®
+			if (_rnd == 0)
+			{
+				_velocity.y += 3;
+			}
+			else if (_rnd == 1)
+			{
+				_velocity.y -= 3;
+			}
 
-void Enemy::Release()
-{
+			if (_hitWallY == true)
+			{
+				//c•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
+				_stateCount = 3;
+			}
+			break;
+		case 3://•ûŒüŒˆ’è
+			//•Ï”‚Éƒ‰ƒ“ƒ_ƒ€‚È’l‚ðŠi”[
+			_rnd = GetRand(1);
+			_stateCount = 4;
+			break;
+		case 4: //‰¡ˆÚ“®
+			if (_rnd == 0)
+			{
+				_velocity.x += 3;
+			}
+			else if (_rnd == 1)
+			{
+				_velocity.x -= 3;
+			}
+
+			//c•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
+			if (_hitWallX == true)
+			{
+				_stateCount = 1;
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
 }
 
 void Enemy::UpdatePosition(bool hitX, bool hitY)
@@ -162,18 +144,17 @@ void Enemy::UpdatePosition(bool hitX, bool hitY)
 	if (hitX)
 	{
 		_velocity.x = 0;
-		HitWallX = true;
+		_hitWallX = true;
 	}
-	else HitWallX = false;
+	else _hitWallX = false;
 
 	//	Y•ûŒü‚ÉÕ“Ë
 	if (hitY)
 	{
 		_velocity.y = 0;
-		HitWallY = true;
+		_hitWallY = true;
 	}
-	else HitWallY = false;
+	else _hitWallY = false;
 
 	_position += _velocity;
 }
->>>>>>> 35f0a1e7f9cafb2d0df6fb88f3b918d60a96626e

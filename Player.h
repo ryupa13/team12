@@ -1,7 +1,6 @@
 #pragma once
 #include "Vector2.h"
 #include "GameObject.h"
-#include "TileMap.h"
 
 //	プレイヤークラス
 //	※GameObjectクラスを継承する
@@ -32,5 +31,4 @@ public:
 public:
 	//	画像ハンドル
 	int _grp;
-	TileMap _tileMap;
 };

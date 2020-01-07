@@ -4,6 +4,13 @@
 #include<fstream>
 #include<sstream>
 
+TileMap& TileMap::Instance()
+{
+	static std::unique_ptr<TileMap> instance(new TileMap());
+
+	return *instance;
+}
+
 //‰Šú‰»
 void TileMap::Start()
 {

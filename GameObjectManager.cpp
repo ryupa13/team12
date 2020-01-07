@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "TileMap.h"
 
 //デストラクタ
 GameObjectManager::~GameObjectManager()
@@ -254,12 +255,31 @@ void GameObjectManager::RemoveDeadGameObjects()
 	}
 }
 
-void GameObjectManager::TileMapCollision(bool hitX, bool hitY)
+void GameObjectManager::TileMapCollision()
 {
 	for (auto p : _players)
 	{
 		if (p->_kind == p->Player)
-			return p->Hit(hitX, hitY);
+		{
+			auto pInfo = TileMap::Instance().FindTileHitInfo((*p).Position(), (*p).Size(), (*p).Velocity());
+			p->Hit(pInfo._hitX, pInfo._hitY);
+
+			if (pInfo._hitX == 1 || pInfo._hitY == 1)
+			{
+				if (pInfo._no == 80)
+				{
+					p->_state = p->Clear;
+				}
+			}
+		}
+	}
+	for (auto e : _enemys)
+	{
+		if (e->_kind == e->Enemy)
+		{
+			auto eInfo = TileMap::Instance().FindTileHitInfo((*e).Position(), (*e).Size(), (*e).Velocity());
+			e->Hit(eInfo._hitX, eInfo._hitY);
+		}
 	}
 }
 
@@ -267,7 +287,7 @@ Vector2 GameObjectManager::GetPlayerPosition()
 {
 	for (auto p : _players)
 	{
-		if (p->_kind == 0)
+		if (p->_kind == p->Player)
 			return p->Position();
 	}
 	return Vector2(0, 0);
@@ -277,7 +297,7 @@ Vector2 GameObjectManager::GetPlayerSize()
 {
 	for (auto p : _players)
 	{
-		if (p->_kind == 0)
+		if (p->_kind == p->Player)
 			return p->Size();
 	}
 	return Vector2(0, 0);
@@ -287,8 +307,20 @@ Vector2 GameObjectManager::GetPlayerVelocity()
 {
 	for (auto p : _players)
 	{
-		if (p->_kind == 0)
+		if (p->_kind == p->Player)
 			return p->Velocity();
 	}
 	return Vector2(0, 0);
+}
+
+bool GameObjectManager::GetClearFlag()
+{
+	for (auto p : _players)
+	{
+		if (p->_kind == p->Player)
+		{
+			return p->IsClear();
+		}
+		return false;
+	}
 }
