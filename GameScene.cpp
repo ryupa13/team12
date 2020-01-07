@@ -11,6 +11,8 @@ void GameScene::Initialize()
 
 	_tileMap.Start();
 	_player.Start();
+	HitX = false;
+	HitY = false;
 }
 
 void GameScene::Update()
@@ -34,7 +36,17 @@ void GameScene::Update()
 		}
 	}
 
+	if (info._hitX == 1)
+	{
+		HitX = true;
+	}
+	else HitX = false;
 
+	if (info._hitY == 1)
+	{
+		HitY = true;
+	}
+	else HitY = false;
 
 #ifdef _DEBUG_
 	DrawFormatString(20, 50, GetColor(255, 255, 255), "HitX : %d HitY : %d No : %d ", info._hitX, info._hitY, info._no);

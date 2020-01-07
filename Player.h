@@ -21,7 +21,7 @@ public:
 	// 解放
 	void Release()  override;
 
-	// 解放
+	//壁にぶつかっているかの判定
 	void UpdatePosition(bool hitX, bool hitY);
 
 	//	速度を取得
@@ -33,4 +33,10 @@ public:
 	int _grp;
 
 	Vector2 _velocity;
+
+	//行動決定カウント
+	int StateCount;
+	bool HitWallX;//横壁にぶつかったか？
+	bool HitWallY;//縦壁にぶつかったか？
+	int rnd;//ランダム格納用変数
 };

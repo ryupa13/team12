@@ -20,4 +20,7 @@ private:
 	int _gameImage;
 	TileMap _tileMap;
 	Player _player;
+
+	bool HitX;
+	bool HitY;
 };
