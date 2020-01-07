@@ -12,7 +12,12 @@ void SmallEnemy::Start()
 	_radius = 16;
 	_state = State::Alive;
 	_kind = Kind::Enemy;
+	_search = SearchState::Free;
 	_searchPlayerRadius = 320;
+	_stateCount = 0;
+	_hitWallX = false;
+	_hitWallY = false;
+	_rnd = 1234;
 }
 
 //•`‰æ
@@ -43,6 +48,7 @@ void SmallEnemy::Update()
 		_search = SearchState::Free;
 	}
 
+	_velocity.Zero();
 	UpdateVelocity();
 }
 
@@ -78,7 +84,7 @@ void SmallEnemy::UpdateVelocity()
 		switch (_stateCount)
 		{
 		case 0://Å‰‚ÌˆÚ“®
-			_velocity.x -= 3;
+			_velocity.x -= 1;
 			if (_hitWallX == true)
 			{
 				//‰¡•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
@@ -93,11 +99,11 @@ void SmallEnemy::UpdateVelocity()
 		case 2:	//cˆÚ“®
 			if (_rnd == 0)
 			{
-				_velocity.y += 3;
+				_velocity.y += 1;
 			}
 			else if (_rnd == 1)
 			{
-				_velocity.y -= 3;
+				_velocity.y -= 1;
 			}
 
 			if (_hitWallY == true)
@@ -114,11 +120,11 @@ void SmallEnemy::UpdateVelocity()
 		case 4: //‰¡ˆÚ“®
 			if (_rnd == 0)
 			{
-				_velocity.x += 3;
+				_velocity.x += 1;
 			}
 			else if (_rnd == 1)
 			{
-				_velocity.x -= 3;
+				_velocity.x -= 1;
 			}
 
 			//c•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç

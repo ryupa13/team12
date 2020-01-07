@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "GraphFactory.h"
 #include "Renderer.h"
+#include "Input.h"
 
 //	初期化処理
 void Player::Start()
@@ -26,31 +27,11 @@ void Player::Render()
 //	更新
 void Player::Update()
 {
-	//	キー入力を更新
-	int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-
 	//	移動量をクリア	
 	_velocity.Zero();
 
-	// 上キーで前に進む
-	if (key & PAD_INPUT_UP) {
-		_velocity.y -= 2;
-	}
-
-	//	下キーで後ろに進む
-	if (key & PAD_INPUT_DOWN) {
-		_velocity.y += 2;
-	}
-
-	//	右キーで右に移動
-	if (key & PAD_INPUT_RIGHT) {
-		_velocity.x += 2;
-	}
-
-	//	左キーで右に移動
-	if (key & PAD_INPUT_LEFT) {
-		_velocity.x -= 2;
-	}
+	float speed = 3;
+	_velocity = Input::Velocity() * speed;
 }
 
 //　ヒット通知

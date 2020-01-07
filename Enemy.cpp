@@ -47,6 +47,7 @@ void Enemy::Update()
 		_search = SearchState::Free;
 	}
 
+	_velocity.Zero();
 	UpdateVelocity();
 }
 
@@ -82,7 +83,7 @@ void Enemy::UpdateVelocity()
 		switch (_stateCount)
 		{
 		case 0://Å‰‚ÌˆÚ“®
-			_velocity.x -= 3;
+			_velocity.x -= 1;
 			if (_hitWallX == true)
 			{
 				//‰¡•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
@@ -97,11 +98,11 @@ void Enemy::UpdateVelocity()
 		case 2:	//cˆÚ“®
 			if (_rnd == 0)
 			{
-				_velocity.y += 3;
+				_velocity.y += 1;
 			}
 			else if (_rnd == 1)
 			{
-				_velocity.y -= 3;
+				_velocity.y -= 1;
 			}
 
 			if (_hitWallY == true)
@@ -118,11 +119,11 @@ void Enemy::UpdateVelocity()
 		case 4: //‰¡ˆÚ“®
 			if (_rnd == 0)
 			{
-				_velocity.x += 3;
+				_velocity.x += 1;
 			}
 			else if (_rnd == 1)
 			{
-				_velocity.x -= 3;
+				_velocity.x -= 1;
 			}
 
 			//c•Ç‚É‚Ô‚Â‚©‚Á‚½‚ç
