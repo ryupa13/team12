@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "Enemy.h"
 
 //ƒQ[ƒ€‰æ–ÊƒV[ƒ“
 class GameScene :public BaseScene
@@ -20,7 +21,5 @@ private:
 	int _gameImage;
 	TileMap _tileMap;
 	Player _player;
-
-	bool HitX;
-	bool HitY;
+	Enemy _enemy;
 };

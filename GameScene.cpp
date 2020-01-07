@@ -11,8 +11,8 @@ void GameScene::Initialize()
 
 	_tileMap.Start();
 	_player.Start();
-	HitX = false;
-	HitY = false;
+	_enemy.Start();
+
 }
 
 void GameScene::Update()
@@ -24,8 +24,13 @@ void GameScene::Update()
 	auto info = _tileMap.FindTileHitInfo(_player.Position(), _player.Size(), _player.Velocity());
 	_player.UpdatePosition(info._hitX, info._hitY);
 
+	_enemy.Update();
+	auto Einfo = _tileMap.FindTileHitInfo(_enemy.Position(), _enemy.Size(), _enemy.Velocity());
+	_enemy.UpdatePosition(Einfo._hitX, Einfo._hitY);
+
 	_tileMap.Render();
 	_player.Render();
+	_enemy.Render();
 
 	if (info._hitX == 1 || info._hitY == 1)
 	{
@@ -35,18 +40,6 @@ void GameScene::Update()
 			SceneManager::Instance().LoadScene("Clear");
 		}
 	}
-
-	if (info._hitX == 1)
-	{
-		HitX = true;
-	}
-	else HitX = false;
-
-	if (info._hitY == 1)
-	{
-		HitY = true;
-	}
-	else HitY = false;
 
 #ifdef _DEBUG_
 	DrawFormatString(20, 50, GetColor(255, 255, 255), "HitX : %d HitY : %d No : %d ", info._hitX, info._hitY, info._no);

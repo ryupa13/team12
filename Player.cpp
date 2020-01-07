@@ -36,100 +36,85 @@ void Player::Update()
 	_velocity = Vector2(0, 0);
 
 #pragma region  キー入力で移動
-////	キー入力を更新
-//int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-//// 上キーで前に進む
-//if (key & PAD_INPUT_UP) {
-//	_velocity.y -= 3;
-//}
-////	下キーで後ろに進む
-//if (key & PAD_INPUT_DOWN) {
-//	_velocity.y += 3;
-//}
-////	右キーで右に移動
-//if (key & PAD_INPUT_RIGHT) {
-//	_velocity.x += 3;
-//}
-////	左キーで右に移動
-//if (key & PAD_INPUT_LEFT) {
-//	_velocity.x -= 3;
-//}
+//	キー入力を更新
+int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+// 上キーで前に進む
+if (key & PAD_INPUT_UP) {
+	_velocity.y -= 3;
+}
+//	下キーで後ろに進む
+if (key & PAD_INPUT_DOWN) {
+	_velocity.y += 3;
+}
+//	右キーで右に移動
+if (key & PAD_INPUT_RIGHT) {
+	_velocity.x += 3;
+}
+//	左キーで右に移動
+if (key & PAD_INPUT_LEFT) {
+	_velocity.x -= 3;
+}
 #pragma endregion
 
-	//自由移動
-	switch (StateCount)
-	{
-		case 0://最初の移動
-			_velocity.x += 3;
-			if (HitWallX == true)
-			{
-				//横壁にぶつかったら
-				StateCount = 1;
-			}
-			break;
-		case 1://方向決定
-			//変数にランダムな値を格納
-			rnd = GetRand(1);
-			StateCount = 2;
-			break;
-		case 2:	//縦移動
-			if (rnd == 0)
-			{
-				_velocity.y += 3;
-			}
-			else if (rnd == 1)
-			{
-				_velocity.y -= 3;
-			}
-
-			if (HitWallY == true)
-			{
-				//縦壁にぶつかったら
-				StateCount = 3;
-			}
-			break;
-		case 3://方向決定
-			//変数にランダムな値を格納
-			rnd = GetRand(1);
-			StateCount = 4;
-			break;
-		case 4: //横移動
-			if (rnd == 0)
-			{
-				_velocity.x += 3;
-			}
-			else if (rnd == 1)
-			{
-				_velocity.x -= 3;
-			}
-
-			//縦壁にぶつかったら
-			if (HitWallX == true)
-			{
-				StateCount = 1;
-			}
-			break;
-
-	default:
-		break;
-	}
-
-	//if (HitX == true)
+#pragma region AutoMove
+		////自由移動
+	//switch (StateCount)
 	//{
-	//	_velocity.x = 0;
-	//	rnd = GetRand(1);
-	//	if (rnd == 0)
-	//	{
-	//		//上に移動
-	//		_velocity.y -= 5;
-	//	}
-	//	else if (rnd == 1)
-	//	{
-	//		//下に移動
-	//		_velocity.y += 5;
-	//	}
+	//	case 0://最初の移動
+	//		_velocity.x += 3;
+	//		if (HitWallX == true)
+	//		{
+	//			//横壁にぶつかったら
+	//			StateCount = 1;
+	//		}
+	//		break;
+	//	case 1://方向決定
+	//		//変数にランダムな値を格納
+	//		rnd = GetRand(1);
+	//		StateCount = 2;
+	//		break;
+	//	case 2:	//縦移動
+	//		if (rnd == 0)
+	//		{
+	//			_velocity.y += 3;
+	//		}
+	//		else if (rnd == 1)
+	//		{
+	//			_velocity.y -= 3;
+	//		}
+
+	//		if (HitWallY == true)
+	//		{
+	//			//縦壁にぶつかったら
+	//			StateCount = 3;
+	//		}
+	//		break;
+	//	case 3://方向決定
+	//		//変数にランダムな値を格納
+	//		rnd = GetRand(1);
+	//		StateCount = 4;
+	//		break;
+	//	case 4: //横移動
+	//		if (rnd == 0)
+	//		{
+	//			_velocity.x += 3;
+	//		}
+	//		else if (rnd == 1)
+	//		{
+	//			_velocity.x -= 3;
+	//		}
+
+	//		//縦壁にぶつかったら
+	//		if (HitWallX == true)
+	//		{
+	//			StateCount = 1;
+	//		}
+	//		break;
+
+	//default:
+	//	break;
 	//}
-	//else _velocity.x += 5;
+#pragma endregion
 }
 
 //	解放
