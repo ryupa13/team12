@@ -5,6 +5,7 @@
 #include "WindowInfo.h"
 #include "GameObjectManager.h"
 #include "Enemy.h"
+#include "SmallEnemy.h"
 
 void GameScene::Initialize()
 {
@@ -17,6 +18,7 @@ void GameScene::Initialize()
 	GameObjectManager::Instance().Add(_player);
 	GameObjectManager::Instance().Add(new Enemy(Vector2(1000, 200)));
 	GameObjectManager::Instance().Add(new Enemy(Vector2(1000, 400)));
+	GameObjectManager::Instance().Add(new SmallEnemy(Vector2(400, 200)));
 }
 
 void GameScene::Update()

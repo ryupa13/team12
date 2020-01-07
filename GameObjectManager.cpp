@@ -63,13 +63,17 @@ void GameObjectManager::Update()
 	for (auto newObject : _addNewGameObjects)
 	{
 		newObject->Start();
-		if (newObject->_kind == 0)
+		if (newObject->_kind == newObject->Player)
 		{
 			_players.push_back(newObject);
 		}
-		if (newObject->_kind == 1)
+		if (newObject->_kind == newObject->Enemy)
 		{
 			_enemys.push_back(newObject);
+		}
+		if (newObject->_kind == newObject->Block)
+		{
+			_blocks.push_back(newObject);
 		}
 	}
 

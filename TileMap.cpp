@@ -48,6 +48,22 @@ void TileMap::Start()
 			//マップ情報を格納
 			_map.push_back(data);
 		}
+
+		int x = 0, y = 0;
+		for (auto row : _map)
+		{
+			x = 0;
+
+			for (auto col : row)
+			{
+				if (col > 0)
+				{
+
+				}
+				x++;
+			}
+			y++;
+		}
 	}
 
 	//1タイルマップのサイズを設定

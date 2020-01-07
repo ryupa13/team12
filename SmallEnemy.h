@@ -3,12 +3,12 @@
 #include "Player.h"
 
 //エネミークラス
-class Enemy : public GameObject
+class SmallEnemy : public GameObject
 {
 public:
 	//コンストラクタ
-	Enemy() {}
-	Enemy(Vector2 position) { _position = position; }
+	SmallEnemy() {}
+	SmallEnemy(Vector2 position) { _position = position; }
 
 	//開始
 	void Start() override;
