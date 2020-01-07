@@ -8,7 +8,7 @@
 void TileMap::Start()
 {
 	//画像の読み込み
-	_mapgrp = GraphFactory::Instance().LoadGraph("img\\pipo-map001.png");
+	_mapgrp = GraphFactory::Instance().LoadGraph("img\\maptipsample.png");
 
 #pragma region 配列のマップ
 	////タイルマップの情報を作成
@@ -33,7 +33,7 @@ void TileMap::Start()
 #pragma endregion
 
 	//マップを読み込む
-	std::ifstream ifs("stage\\map2.csv");
+	std::ifstream ifs("stage\\SampleStage.csv");
 
 	//ファイルの読み込みに成功したら
 	if (ifs)
@@ -67,7 +67,7 @@ void TileMap::Start()
 	}
 
 	//1タイルマップのサイズを設定
-	_tilesize = 40;
+	_tilesize = 64;
 }
 
 //	描画
