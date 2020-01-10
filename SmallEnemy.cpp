@@ -6,12 +6,12 @@
 //èâä˙âª
 void SmallEnemy::Start()
 {
-	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip019b.png");
+	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip010.png");
 	_size = Vector2(32, 32);
 	_rectPosition = Vector2(0, 32);
 	_radius = 16;
 	_state = State::Alive;
-	_kind = Kind::Enemy;
+	_kind = Kind::SmallEnemy;
 	_search = SearchState::Free;
 	_searchPlayerRadius = 320;
 	_stateCount = 0;
@@ -56,6 +56,11 @@ void SmallEnemy::Update()
 void SmallEnemy::Hit()
 {
 	_state = State::Dead;
+}
+
+void SmallEnemy::Hit(GameObject *hitObject)
+{
+
 }
 
 void SmallEnemy::Hit(bool hitX, bool hitY)

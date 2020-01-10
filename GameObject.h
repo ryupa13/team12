@@ -19,6 +19,7 @@ public:
 
 	//　ヒット通知
 	virtual void Hit() = 0;
+	virtual void Hit(GameObject *hitObject) = 0;
 	virtual void Hit(bool hitX, bool hitY) = 0;
 
 	//	解放
@@ -61,6 +62,7 @@ public:
 		Player,
 		Enemy,
 		Block,
+		SmallEnemy,
 	};
 	Kind _kind;
 };

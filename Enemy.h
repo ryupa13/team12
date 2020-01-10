@@ -21,6 +21,7 @@ public:
 
 	//ƒqƒbƒg’Ê’m
 	void Hit() override;
+	void Hit(GameObject *hitObject) override;
 	void Hit(bool hitX, bool hitY) override;
 
 	//‰ð•ú

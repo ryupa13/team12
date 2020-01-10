@@ -57,6 +57,11 @@ void Enemy::Hit()
 	_state = State::Dead;
 }
 
+void Enemy::Hit(GameObject *hitObject)
+{
+
+}
+
 void Enemy::Hit(bool hitX, bool hitY)
 {
 	UpdatePosition(hitX, hitY);

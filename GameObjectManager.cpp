@@ -68,7 +68,7 @@ void GameObjectManager::Update()
 		{
 			_players.push_back(newObject);
 		}
-		if (newObject->_kind == newObject->Enemy)
+		if (newObject->_kind == newObject->Enemy || newObject->_kind == newObject->SmallEnemy)
 		{
 			_enemys.push_back(newObject);
 		}
@@ -99,7 +99,6 @@ void GameObjectManager::Update()
 	}
 
 	HitToCharacters();
-
 	RemoveDeadGameObjects();
 }
 
@@ -143,7 +142,7 @@ void GameObjectManager::HitToCharacters()
 			if (_collision.CircleCollision(*p, *e))
 			{
 				//互いにヒット通知
-				(*p)->Hit();
+				(*p)->Hit(*e);
 				(*e)->Hit();
 			}
 			++e;
@@ -196,29 +195,27 @@ void GameObjectManager::HitToBlocks()
 void GameObjectManager::HitToEnemys()
 {
 	//エネミーで繰り返し
-	for (auto enemy = _enemys.begin(); enemy != _enemys.end();)
+	for (auto enemy : _enemys)
 	{
 		//エネミーで繰り返し
-		for (auto e = _enemys.begin(); e != _enemys.end();)
+		for (auto e : _enemys)
 		{
 			//同じエネミーなら次へ
-			if (enemy == e)
+			if (&enemy == &e)
 				continue;
 
 			//どちらかが死んでたら次へ
-			if ((*enemy)->IsDead() || (*e)->IsDead())
+			if (enemy->IsDead() || e->IsDead())
 				continue;
 
 			//エネミー同士が衝突しているか
-			if (_collision.RectCollision(*enemy, *e))
+			if (_collision.RectCollision(enemy, e))
 			{
 				//お互いにヒット通知
-				(*enemy)->Hit();
-				(*e)->Hit();
+				enemy->Hit();
+				e->Hit();
 			}
-			++e;
 		}
-		++enemy;
 	}
 }
 
@@ -275,7 +272,7 @@ void GameObjectManager::TileMapCollision()
 	}
 	for (auto e : _enemys)
 	{
-		if (e->_kind == e->Enemy)
+		if (e->_kind == e->Enemy || e->_kind == e->SmallEnemy)
 		{
 			auto eInfo = TileMap::Instance().FindTileHitInfo((*e).Position(), (*e).Size(), (*e).Velocity());
 			e->Hit(eInfo._hitX, eInfo._hitY);

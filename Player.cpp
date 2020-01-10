@@ -40,6 +40,14 @@ void Player::Hit()
 
 }
 
+void Player::Hit(GameObject *hitObject)
+{
+	if ((*hitObject)._kind == (*hitObject).SmallEnemy)
+	{
+		_state = State::Clear;
+	}
+}
+
 void Player::Hit(bool hitX, bool hitY)
 {
 	UpdatePosition(hitX, hitY);

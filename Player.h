@@ -23,6 +23,7 @@ public:
 
 	//　ヒット通知
 	void Hit() override;
+	void Hit(GameObject *hitObject) override;
 	void Hit(bool hitX, bool hitY) override;
 
 	//　

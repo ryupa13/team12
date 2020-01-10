@@ -10,14 +10,12 @@
 
 void GameScene::Initialize()
 {
-	//ƒ^ƒCƒgƒ‹‚Ì”wŒi‚Ì‰æ‘œ“Ç‚İ‚İ
-	_gameImage = GraphFactory::Instance().LoadGraph("img\\pipo-battlebg001b.jpg");
 	TileMap::Instance().Start();
 
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
-	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 11, 64)));
-	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 11, 64)));
+	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 5, 64 * 5)));
+	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 9, 64 * 9)));
 	GameObjectManager::Instance().Add(new SmallEnemy(Vector2(64 * 11, 64)));
 }
 
@@ -54,5 +52,5 @@ void GameScene::Update()
 
 void GameScene::Release()
 {
-	GraphFactory::Instance().EraseGraph("img\\pipo-battlebg001b.jpg");
+
 }
