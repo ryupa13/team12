@@ -80,7 +80,8 @@ void SmallEnemy::UpdateVelocity()
 	{
 		_playerPosition = GameObjectManager::Instance().GetPlayerPosition();
 		_velocity = _playerPosition - _position;
-		_velocity = _velocity.Normalized();
+		if(_velocity.Magnitude() != 0)
+			_velocity = _velocity.Normalized();
 		_velocity = _velocity * -3;
 	}
 	else if (_search == SearchState::Free)

@@ -65,4 +65,5 @@ public:
 		SmallEnemy,
 	};
 	Kind _kind;
+	int _
 };

@@ -99,6 +99,7 @@ void GameObjectManager::Update()
 	}
 
 	HitToCharacters();
+	//HitToEnemys();
 	RemoveDeadGameObjects();
 }
 
@@ -129,10 +130,10 @@ void GameObjectManager::Add(GameObject* gameObject)
 void GameObjectManager::HitToCharacters()
 {
 	//プレイヤーで繰り返し
-	for (auto p = _players.begin(); p != _players.end();)
+	for (auto p = _players.begin(); p != _players.end(); ++p)
 	{
 		//エネミーで繰り返し
-		for (auto e = _enemys.begin(); e != _enemys.end();)
+		for (auto e = _enemys.begin(); e != _enemys.end(); ++e)
 		{
 			//どちらかが死んでたら次へ
 			if ((*p)->IsDead() || (*e)->IsDead())
@@ -145,9 +146,7 @@ void GameObjectManager::HitToCharacters()
 				(*p)->Hit(*e);
 				(*e)->Hit();
 			}
-			++e;
 		}
-		++p;
 	}
 }
 
@@ -155,10 +154,10 @@ void GameObjectManager::HitToCharacters()
 void GameObjectManager::HitToBlocks()
 {
 	//ブロックで繰り返し
-	for (auto b = _blocks.begin(); b != _blocks.end();)
+	for (auto b = _blocks.begin(); b != _blocks.end(); ++b)
 	{
 		//プレイヤーで繰り返し
-		for (auto p = _players.begin(); p != _players.end();)
+		for (auto p = _players.begin(); p != _players.end(); ++p)
 		{
 			//どちらかが死んでたら次へ
 			if ((*b)->IsDead() || (*p)->IsDead())
@@ -170,10 +169,9 @@ void GameObjectManager::HitToBlocks()
 				//プレイヤーにヒット通知
 				(*p)->Hit();
 			}
-			++p;
 		}
 		//エネミーで繰り返し
-		for (auto e = _enemys.begin(); e != _enemys.end();)
+		for (auto e = _enemys.begin(); e != _enemys.end(); ++e)
 		{
 			//どちらかが死んでたら次へ
 			if ((*b)->IsDead() || (*e)->IsDead())
@@ -185,9 +183,7 @@ void GameObjectManager::HitToBlocks()
 				//エネミーにヒット通知
 				(*e)->Hit();
 			}
-			++e;
 		}
-		++b;
 	}
 }
 
