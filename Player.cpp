@@ -7,8 +7,9 @@
 //	‰Šú‰»ˆ—
 void Player::Start()
 {
-	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip005.png");
-	_size = Vector2(32, 32);
+	_grp = GraphFactory::Instance().LoadGraph("img\\player.png");
+	_rectSize = Vector2(64, 64);
+	_size = Vector2(58, 58);
 	_radius = 16;
 	_position = Vector2(64, 64);
 	_rectPosition = Vector2(0, 64);

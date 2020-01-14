@@ -40,7 +40,7 @@ void TileMap::Start()
 #pragma endregion
 
 	//マップを読み込む
-	std::ifstream ifs("stage\\SampleStage.csv");
+	std::ifstream ifs("stage\\SampleStage2.csv");
 
 	//ファイルの読み込みに成功したら
 	if (ifs)

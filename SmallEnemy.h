@@ -8,7 +8,7 @@ class SmallEnemy : public GameObject
 public:
 	//コンストラクタ
 	SmallEnemy() {}
-	SmallEnemy(Vector2 position) { _position = position; }
+	SmallEnemy(int isEnemy, Vector2 position) { _isEnemy = isEnemy, _position = position; }
 
 	//開始
 	void Start() override;
@@ -49,7 +49,10 @@ public:
 	};
 	SearchState _search;
 	int _stateCount;
+	int _chaseCount;
 	bool _hitWallX;
 	bool _hitWallY;
 	int _rnd;
+	float _speed;
+	Vector2 _length;
 };

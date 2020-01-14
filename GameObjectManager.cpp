@@ -99,7 +99,7 @@ void GameObjectManager::Update()
 	}
 
 	HitToCharacters();
-	//HitToEnemys();
+	HitToEnemys();
 	RemoveDeadGameObjects();
 }
 
@@ -197,7 +197,7 @@ void GameObjectManager::HitToEnemys()
 		for (auto e : _enemys)
 		{
 			//同じエネミーなら次へ
-			if (&enemy == &e)
+			if (enemy->_isEnemy == e->_isEnemy)
 				continue;
 
 			//どちらかが死んでたら次へ
@@ -208,8 +208,8 @@ void GameObjectManager::HitToEnemys()
 			if (_collision.RectCollision(enemy, e))
 			{
 				//お互いにヒット通知
-				enemy->Hit();
-				e->Hit();
+				enemy->Hit(e);
+				e->Hit(enemy);
 			}
 		}
 	}
