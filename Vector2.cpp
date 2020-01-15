@@ -40,6 +40,7 @@ Vector2& Vector2::operator -= (const Vector2& vec) {
 	return *this;
 }
 
+
 Vector2 Vector2::operator*(const float & scale)
 {
 	Vector2 t(this->x * scale, this->y * scale);

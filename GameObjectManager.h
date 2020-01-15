@@ -45,6 +45,9 @@ private:
 	//ブロックとの当たり判定
 	void HitToBlocks();
 
+	//プレイヤーと墨の当たり判定
+	void HitToPlayers();
+
 	//エネミー同士の当たり判定
 	void HitToEnemys();
 
@@ -56,6 +59,7 @@ private:
 	std::list<GameObject*> _enemys;  //エネミーリスト
 	std::list<GameObject*> _blocks;  //ブロックリスト
 	std::list<GameObject*> _addNewGameObjects; //追加するゲームオブジェクトリスト
+	std::list<GameObject*> _sumis; //墨リスト
 
 	Collision _collision;
 };

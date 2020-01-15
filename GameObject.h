@@ -63,7 +63,8 @@ public:
 		Enemy,
 		Block,
 		SmallEnemy,
+		Sumi,
 	};
 	Kind _kind;
-	int _
+	//int _
 };

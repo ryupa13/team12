@@ -14,6 +14,7 @@ void GameScene::Initialize()
 
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
+	GameObjectManager::Instance().Add(_sumi);
 	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 5, 64 * 5)));
 	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 9, 64 * 9)));
 	GameObjectManager::Instance().Add(new SmallEnemy(Vector2(64 * 11, 64)));
