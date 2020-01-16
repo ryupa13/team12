@@ -54,12 +54,15 @@ void Enemy::Update()
 //ƒqƒbƒg’Ê’m
 void Enemy::Hit()
 {
-	_state = State::Dead;
+	//_state = State::Dead;
 }
 
 void Enemy::Hit(GameObject *hitObject)
 {
-
+	if ((*hitObject)._kind == (*hitObject).Player)
+	{
+		_state = State::Dead;
+	}
 }
 
 void Enemy::Hit(bool hitX, bool hitY)
@@ -143,6 +146,8 @@ void Enemy::UpdateVelocity()
 			break;
 		}
 	}
+
+	
 }
 
 void Enemy::UpdatePosition(bool hitX, bool hitY)
