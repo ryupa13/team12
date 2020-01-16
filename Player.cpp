@@ -16,6 +16,9 @@ void Player::Start()
 	_velocity = Vector2(0, 0);
 	_state = State::Alive;
 	_kind = Kind::Player;
+	pDirection = PDirection::DOWN;
+	
+
 }
 
 //	描画
@@ -23,7 +26,9 @@ void Player::Render()
 {
 	//	プレイヤーを描画
 	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	_sumishot.Render();
 }
+
 
 //	更新
 void Player::Update()
@@ -33,6 +38,42 @@ void Player::Update()
 
 	float speed = 3;
 	_velocity = Input::Velocity() * speed;
+	UpdateMotion();
+
+	if (Input::GetKeyTrigger(KEY_INPUT_Z))
+	{
+		if (_velocity.Magnitude() <= 0)
+		{
+			_velocity = _maps[pDirection];
+		}
+		if (count < 100)
+		{
+			_sumishot.Shot(_position,_maps[pDirection]);
+			count++;
+		}
+	}
+}
+
+void Player::UpdateMotion()
+{
+	Vector2  velocity = Input::Velocity();
+	if (velocity.y > 0.0f && (pDirection != PDirection::DOWN))
+	{
+		pDirection = PDirection::DOWN;
+	}
+	else if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
+	{
+		pDirection = PDirection::UP;
+	}
+	else if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
+	{
+		pDirection = PDirection::RIGHT;
+	}
+	else if (velocity.x < 0.0f&& (pDirection != PDirection::LEFT))
+	{
+
+		pDirection = PDirection::LEFT;
+	}
 }
 
 //　ヒット通知

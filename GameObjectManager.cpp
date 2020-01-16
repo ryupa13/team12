@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "TileMap.h"
+#include"Sumi.h"
 
 //デストラクタ
 GameObjectManager::~GameObjectManager()
@@ -21,6 +22,10 @@ GameObjectManager::~GameObjectManager()
 	for (auto b : _blocks)
 	{
 		delete b;
+	}
+	for (auto s : _sumis)
+	{
+		delete s;
 	}
 }
 
@@ -56,6 +61,12 @@ void GameObjectManager::Start()
 
 		++b;
 	}
+	for (auto s = _sumis.begin(); s != _sumis.end();)
+	{
+		s = _sumis.erase(s);
+		continue;
+		++s;
+	}
 }
 
 //更新
@@ -75,6 +86,10 @@ void GameObjectManager::Update()
 		if (newObject->_kind == newObject->Block)
 		{
 			_blocks.push_back(newObject);
+		}
+		if (newObject->_kind == newObject->Sumi)
+		{
+			_players.push_back(newObject);
 		}
 	}
 
@@ -113,6 +128,10 @@ void GameObjectManager::Render()
 	for (auto e : _enemys)
 	{
 		e->Render();
+	}
+	for (auto s : _sumis)
+	{
+		s->Render();
 	}
 }
 
@@ -184,6 +203,36 @@ void GameObjectManager::HitToBlocks()
 				(*e)->Hit();
 			}
 		}
+	}
+}
+
+//プレイヤー同士の当たり判定
+void GameObjectManager::HitToPlayers()
+{
+	//プレイヤーで繰り返し
+	for (auto p = _players.begin(); p != _players.end();)
+	{
+		//プレイヤーで繰り返し
+		for (auto player = _players.begin(); player != _players.end();)
+		{
+			//同じエネミーなら次へ
+			//if ((*p) == (*player))
+			//	continue;
+
+			//どちらかが死んでたら次へ
+			/*if ((*p)->IsDead() || (*player)->IsDead())
+				continue;*/
+
+				//プレイヤー同士が衝突しているか
+			if (_collision.CircleCollision(*p, *player))
+			{
+				//お互いにヒット通知
+				(*p)->Hit();
+				(*player)->Hit();
+			}
+			++player;
+		}
+		++p;
 	}
 }
 

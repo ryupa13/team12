@@ -12,9 +12,16 @@ void GameScene::Initialize()
 {
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
+<<<<<<< HEAD
 	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
 	GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
 	GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
+=======
+	GameObjectManager::Instance().Add(_sumi);
+	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 5, 64 * 5)));
+	GameObjectManager::Instance().Add(new Enemy(Vector2(64 * 9, 64 * 9)));
+	GameObjectManager::Instance().Add(new SmallEnemy(Vector2(64 * 11, 64)));
+>>>>>>> 5a76b1d00273134d99a116fb0b8cc5e9357f4554
 }
 
 void GameScene::Update()

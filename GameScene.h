@@ -18,4 +18,5 @@ private:
 	//ƒQ[ƒ€‚Ì”wŒi‰æ‘œ
 	int _gameImage;
 	GameObject* _player;
+	GameObject* _sumi;
 };

@@ -1,6 +1,9 @@
 #pragma once
 #include "Vector2.h"
 #include "GameObject.h"
+#include"SumiShot.h"
+#include<unordered_map>
+
 
 //	プレイヤークラス
 //	※GameObjectクラスを継承する
@@ -21,6 +24,10 @@ public:
 	//　解放
 	void Release()  override;
 
+	
+
+	void UpdateMotion();
+
 	//　ヒット通知
 	void Hit() override;
 	void Hit(GameObject *hitObject) override;
@@ -28,8 +35,24 @@ public:
 
 	//　
 	void UpdatePosition(bool hitX, bool hitY);
-
+	enum PDirection
+	{
+		DOWN, UP, RIGHT, LEFT,
+	};
+	PDirection pDirection;
 public:
 	//	画像ハンドル
 	int _grp;
+	int count;
+	int su;
+	SumiShot _sumishot;
+	std::unordered_map<PDirection, Vector2>_maps{
+		{PDirection::DOWN,Vector2 (0,1)},
+	{PDirection::UP,Vector2(0,-1)},
+	{PDirection::LEFT,Vector2(-1,0)},
+	{PDirection::RIGHT,Vector2(1,0)}
+	    
+	};
+	
+
 };
