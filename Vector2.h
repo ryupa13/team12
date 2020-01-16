@@ -25,6 +25,7 @@ public:
 
 	//	演算子オーバーロード「*」
 	Vector2 operator*(const float & scale);
+	Vector2 operator*(const Vector2 & scale);
 
 	//	ベクトルの内積
 	float Dot(const Vector2& vec);

@@ -12,8 +12,10 @@ TileMap& TileMap::Instance()
 }
 
 //初期化
-void TileMap::Start()
+void TileMap::Start(const std::string& str)
 {
+	_map.clear();
+
 	//画像の読み込み
 	_mapgrp = GraphFactory::Instance().LoadGraph("img\\maptipsample.png");
 
@@ -40,7 +42,7 @@ void TileMap::Start()
 #pragma endregion
 
 	//マップを読み込む
-	std::ifstream ifs("stage\\SampleStage2.csv");
+	std::ifstream ifs(str);
 
 	//ファイルの読み込みに成功したら
 	if (ifs)

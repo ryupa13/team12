@@ -167,6 +167,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SmallEnemy.cpp" />
+    <ClCompile Include="StageSelectScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SmallEnemy.h" />
+    <ClInclude Include="StageSelectScene.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vector2.h" />

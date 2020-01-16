@@ -10,8 +10,6 @@
 
 void GameScene::Initialize()
 {
-	TileMap::Instance().Start();
-
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
 	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
