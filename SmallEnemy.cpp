@@ -61,14 +61,15 @@ void SmallEnemy::Update()
 //ƒqƒbƒg’Ê’m
 void SmallEnemy::Hit()
 {
-	_state = State::Dead;
+	//_state = State::Dead;
 }
 
 void SmallEnemy::Hit(GameObject *hitObject)
 {
-	if ((*hitObject)._kind == Enemy || (*hitObject)._kind == (*hitObject).SmallEnemy || (*hitObject)._kind == Sumi)
-		return;
-	_state = State::Dead;
+	if ((*hitObject)._kind == (*hitObject).Player)
+	{
+		_state = State::Dead;
+	}
 }
 
 void SmallEnemy::Hit(bool hitX, bool hitY)

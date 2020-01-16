@@ -62,14 +62,15 @@ void Enemy::Update()
 //ƒqƒbƒg’Ê’m
 void Enemy::Hit()
 {
-	_state = State::Dead;
+	//_state = State::Dead;
 }
 
 void Enemy::Hit(GameObject *hitObject)
 {
-	if ((*hitObject)._kind == (*hitObject).Enemy || (*hitObject)._kind == SmallEnemy || (*hitObject)._kind == Sumi)
-		return;
-	_state = State::Dead;
+	if ((*hitObject)._kind == (*hitObject).Player)
+	{
+		_state = State::Dead;
+	}
 }
 
 void Enemy::Hit(bool hitX, bool hitY)

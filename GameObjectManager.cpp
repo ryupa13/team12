@@ -89,7 +89,7 @@ void GameObjectManager::Update()
 		}
 		if (newObject->_kind == newObject->Sumi)
 		{
-			_players.push_back(newObject);
+			_sumis.push_back(newObject);
 		}
 	}
 
@@ -115,6 +115,7 @@ void GameObjectManager::Update()
 
 	HitToCharacters();
 	HitToEnemys();
+	HitToSumis();
 	RemoveDeadGameObjects();
 }
 
@@ -206,33 +207,43 @@ void GameObjectManager::HitToBlocks()
 	}
 }
 
-//ƒvƒŒƒCƒ„[“¯m‚Ì“–‚½‚è”»’è
-void GameObjectManager::HitToPlayers()
+//–n‚Ì“–‚½‚è”»’è
+void GameObjectManager::HitToSumis()
 {
-	//ƒvƒŒƒCƒ„[‚ÅŒJ‚è•Ô‚µ
-	for (auto p = _players.begin(); p != _players.end();)
+	//–n‚ÅŒJ‚è•Ô‚µ
+	for (auto s = _sumis.begin(); s != _sumis.end();++s)
 	{
 		//ƒvƒŒƒCƒ„[‚ÅŒJ‚è•Ô‚µ
-		for (auto player = _players.begin(); player != _players.end();)
+		for (auto p = _players.begin(); p != _players.end();++p)
 		{
 			//“¯‚¶ƒGƒlƒ~[‚È‚çŸ‚Ö
-			//if ((*p) == (*player))
-			//	continue;
+			if ((*p) == (*s))
+				continue;
 
 			//‚Ç‚¿‚ç‚©‚ª€‚ñ‚Å‚½‚çŸ‚Ö
-			/*if ((*p)->IsDead() || (*player)->IsDead())
-				continue;*/
+			if ((*p)->IsDead() || (*s)->IsDead())
+				continue;
 
 				//ƒvƒŒƒCƒ„[“¯m‚ªÕ“Ë‚µ‚Ä‚¢‚é‚©
-			if (_collision.CircleCollision(*p, *player))
+			if (_collision.CircleCollision(*p, *s))
 			{
 				//‚¨Œİ‚¢‚Éƒqƒbƒg’Ê’m
-				(*p)->Hit();
-				(*player)->Hit();
+				(*p)->Hit(*s);
+				(*s)->Hit(*p);
 			}
-			++player;
 		}
-		++p;
+
+		for (auto e = _enemys.begin(); e != _enemys.end();++e)
+		{
+			if ((*s)->IsDead() || (*e)->IsDead())
+				continue;
+			
+			if (_collision.CircleCollision(*s, *e))
+			{
+				(*e)->Hit(*s);
+				(*s)->Hit(*e);
+			}
+		}
 	}
 }
 
@@ -294,6 +305,15 @@ void GameObjectManager::RemoveDeadGameObjects()
 			continue;
 		}
 		++b;
+	}
+
+	for (auto s = _sumis.begin();s != _sumis.end(); ++s)
+	{
+		if ((*s)->IsDead())
+		{
+			_sumis.erase(s);
+			break;
+		}
 	}
 }
 

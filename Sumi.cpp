@@ -59,20 +59,24 @@ void Sumi::Release()
 
 void Sumi::Hit()
 {
-	/*if (count >= 5)
+	/*if (count >= 1)
 	{*/
-	_state = State::Dead;
+	///_state = State::Dead;
 	//}
 }
 
 void Sumi::Hit(bool hitX, bool hitY)
 {
-	//UpdatePosition(hitX, hitY);
-	//count++;
+	UpdatePosition(hitX, hitY);
+	count++;
 }
 
 void Sumi::Hit(GameObject * hitObject)
 {
+	if ((*hitObject)._kind == (*hitObject).Enemy)
+	{
+		_state = State::Dead;
+	}
 }
 
 void Sumi::UpdatePosition(bool hitX, bool hitY)
