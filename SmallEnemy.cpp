@@ -66,7 +66,7 @@ void SmallEnemy::Hit()
 
 void SmallEnemy::Hit(GameObject *hitObject)
 {
-	if ((*hitObject).Enemy || (*hitObject).SmallEnemy)
+	if ((*hitObject)._kind == Enemy || (*hitObject)._kind == (*hitObject).SmallEnemy || (*hitObject)._kind == Sumi)
 		return;
 	_state = State::Dead;
 }

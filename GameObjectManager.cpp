@@ -163,7 +163,7 @@ void GameObjectManager::HitToCharacters()
 			{
 				//ŒÝ‚¢‚Éƒqƒbƒg’Ê’m
 				(*p)->Hit(*e);
-				(*e)->Hit();
+				(*e)->Hit(*p);
 			}
 		}
 	}

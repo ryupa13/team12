@@ -67,9 +67,5 @@ public:
 		Sumi,
 	};
 	Kind _kind;
-<<<<<<< HEAD
 	int _isEnemy; //“G“¯m‚ÌÕ“Ë”»’è‚Ì“¯ˆêEnemy¯•Ê—p
-=======
-	//int _
->>>>>>> 5a76b1d00273134d99a116fb0b8cc5e9357f4554
 };

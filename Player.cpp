@@ -71,7 +71,6 @@ void Player::UpdateMotion()
 	}
 	else if (velocity.x < 0.0f&& (pDirection != PDirection::LEFT))
 	{
-
 		pDirection = PDirection::LEFT;
 	}
 }
