@@ -55,4 +55,5 @@ public:
 	int _rnd;
 	float _speed;
 	Vector2 _length;
+	int _count;
 };

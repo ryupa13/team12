@@ -55,7 +55,8 @@ public:
 	{
 		Alive, //¶‘¶
 		Dead,  //€–S
-		Clear
+		Clear,//ƒNƒŠƒA
+		Bomb
 	};
 	State _state;
 	enum Kind

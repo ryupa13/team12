@@ -28,7 +28,8 @@ Sumi::Sumi(Vector2 pos, float angle)
 
 void Sumi::Start()
 {
-	_grp = GraphFactory::Instance().LoadGraph("img\\tama.png");
+	_sumiImage = GraphFactory::Instance().LoadGraph("img\\tama.png");
+	_bombImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
 	_animFrameCount = 0;
 	_radius = 8;
 	//_size = Vector2(32, 32);
@@ -38,8 +39,15 @@ void Sumi::Start()
 
 void Sumi::Render()
 {
-	//	プレイヤーを描画
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	if (_state == State::Alive)
+	{
+		//	プレイヤーを描画
+		Renderer::Instance().DrawGraph(_sumiImage, _position, _rectPosition, _size);
+	}
+	if (_state == State::Bomb)
+	{
+		Renderer::Instance().DrawGraph(_bombImage, _position);
+	}
 }
 
 void Sumi::Update()
@@ -49,7 +57,7 @@ void Sumi::Update()
 	auto sheetNo = _animFrameCount / AnimationSpeed;
 	_offset.x = (sheetNo % HorizonSheet) * _size.x;
 	_offset.y = ((sheetNo / HorizonSheet) % VerticalSheet) * _size.y;
-
+	
 	//_position += _velocity;
 }
 
@@ -62,6 +70,7 @@ void Sumi::Hit()
 	/*if (count >= 1)
 	{*/
 	///_state = State::Dead;
+	   
 	//}
 }
 
@@ -73,6 +82,10 @@ void Sumi::Hit(bool hitX, bool hitY)
 
 void Sumi::Hit(GameObject * hitObject)
 {
+	if ((*hitObject)._kind == (*hitObject).Player && Input::GetKeyTrigger(KEY_INPUT_X))
+	{
+		_state = State::Bomb;
+	}
 	if ((*hitObject)._kind == (*hitObject).Enemy)
 	{
 		_state = State::Dead;

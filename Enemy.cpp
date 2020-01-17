@@ -18,6 +18,7 @@ void Enemy::Start()
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;
+	_count = 0;
 }
 
 //•`‰æ
@@ -55,6 +56,20 @@ void Enemy::Update()
 		_chaseCount = 0;
 	}
 
+
+	if (_state == State::Bomb)
+	{
+		 _speed = 0;
+		 _count++;
+		 if (_count > 60)
+		 {
+			 _state = State::Alive;
+			 _speed = 2;
+			 _count = 0;
+		 }
+	}
+
+	
 	_velocity.Zero();
 	UpdateVelocity();
 }
@@ -71,6 +86,11 @@ void Enemy::Hit(GameObject *hitObject)
 	{
 		_state = State::Dead;
 	}
+	if ((*hitObject)._kind == (*hitObject).Sumi && (*hitObject)._state == State::Bomb)
+	{
+		_state = State::Bomb;
+	}
+	
 }
 
 void Enemy::Hit(bool hitX, bool hitY)
