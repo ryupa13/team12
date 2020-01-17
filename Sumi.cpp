@@ -11,9 +11,9 @@ Sumi::Sumi(Vector2 pos,Vector2 velocity)
 {
 	_position = pos;
 	_velocity = velocity;
-	_size = Vector2(32, 32);
+	_size = Vector2(64, 64);
 	//_position.x += _size.x;
-	_position =_position + velocity * 32;
+	_position =_position + velocity * _size;
 }
 
 Sumi::Sumi(Vector2 pos, float angle)
@@ -30,8 +30,7 @@ void Sumi::Start()
 {
 	_grp = GraphFactory::Instance().LoadGraph("img\\tama.png");
 	_animFrameCount = 0;
-	_radius = 8;
-	//_size = Vector2(32, 32);
+	_radius = 32;
 	_state = State::Alive;
 	_kind = Kind::Sumi;
 }

@@ -25,7 +25,7 @@ void Player::Start()
 void Player::Render()
 {
 	//	ƒvƒŒƒCƒ„[‚ğ•`‰æ
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _rectSize);
 	_sumishot.Render();
 }
 
