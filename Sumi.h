@@ -35,7 +35,8 @@ private:
 
 	Vector2 _offset;
 	Vector2 _velocity;
-	int _grp;
+	int _sumiImage;
+	int _bombImage;
 	int _animFrameCount;
 	int count;
 };

@@ -1,4 +1,8 @@
 ﻿  Enemy.cpp
+<<<<<<< HEAD
   SmallEnemy.cpp
   コードを生成中...
   ActionPractice.vcxproj -> C:\team\x64\Debug\ActionPractice.exe
+=======
+  ActionPractice.vcxproj -> C:\Users\KPC-018A1702\Desktop\12月・１月\12.1\x64\Debug\ActionPractice.exe
+>>>>>>> 14ef6b3f95845817dab2b74fc693139a71eedf26
