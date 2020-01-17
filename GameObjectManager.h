@@ -45,8 +45,8 @@ private:
 	//ブロックとの当たり判定
 	void HitToBlocks();
 
-	//プレイヤーと墨の当たり判定
-	void HitToPlayers();
+	//墨の当たり判定
+	void HitToSumis();
 
 	//エネミー同士の当たり判定
 	void HitToEnemys();

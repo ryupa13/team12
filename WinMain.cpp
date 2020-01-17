@@ -5,6 +5,7 @@
 #include "GameScene.h"
 #include "SceneManager.h"
 #include "ClearScene.h"
+#include "StageSelectScene.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -28,6 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//シーンを追加する
 	SceneManager::Instance().AddScene("Title", new TitleScene);
+	SceneManager::Instance().AddScene("Select", new StageSelectScene);
 	SceneManager::Instance().AddScene("Game", new GameScene);
 	SceneManager::Instance().AddScene("Clear", new ClearScene);
 

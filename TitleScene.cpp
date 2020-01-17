@@ -20,8 +20,8 @@ void TitleScene::Update()
 	//スペースキーを押したらゲーム開始
 	if (Input::GetKeyTrigger(KEY_INPUT_SPACE))
 	{
-		//シーンをゲームシーンに切り替える
-		SceneManager::Instance().LoadScene("Game");
+		//シーンをステージ選択シーンに切り替える
+		SceneManager::Instance().LoadScene("Select");
 	}
 }
 

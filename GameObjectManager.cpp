@@ -114,8 +114,8 @@ void GameObjectManager::Update()
 	}
 
 	HitToCharacters();
-	HitToPlayers();
-	//HitToEnemys();
+	HitToEnemys();
+	HitToSumis();
 	RemoveDeadGameObjects();
 }
 
@@ -164,7 +164,7 @@ void GameObjectManager::HitToCharacters()
 			{
 				//互いにヒット通知
 				(*p)->Hit(*e);
-				(*e)->Hit();
+				(*e)->Hit(*p);
 			}
 		}
 	}
@@ -208,7 +208,7 @@ void GameObjectManager::HitToBlocks()
 }
 
 //墨の当たり判定
-void GameObjectManager::HitToPlayers()
+void GameObjectManager::HitToSumis()
 {
 	//墨で繰り返し
 	for (auto s = _sumis.begin(); s != _sumis.end();++s)
@@ -228,10 +228,9 @@ void GameObjectManager::HitToPlayers()
 			if (_collision.CircleCollision(*p, *s))
 			{
 				//お互いにヒット通知
-				(*p)->Hit();
-				(*s)->Hit();
+				(*p)->Hit(*s);
+				(*s)->Hit(*p);
 			}
-			
 		}
 
 		for (auto e = _enemys.begin(); e != _enemys.end();++e)
@@ -241,14 +240,11 @@ void GameObjectManager::HitToPlayers()
 			
 			if (_collision.CircleCollision(*s, *e))
 			{
-				(*e)->Hit();
-				(*s)->Hit();
+				(*e)->Hit(*s);
+				(*s)->Hit(*e);
 			}
 		}
-		
 	}
-
-	
 }
 
 //エネミー同士の当たり判定
@@ -261,7 +257,7 @@ void GameObjectManager::HitToEnemys()
 		for (auto e : _enemys)
 		{
 			//同じエネミーなら次へ
-			if (&enemy == &e)
+			if (enemy->_isEnemy == e->_isEnemy)
 				continue;
 
 			//どちらかが死んでたら次へ
@@ -272,8 +268,8 @@ void GameObjectManager::HitToEnemys()
 			if (_collision.RectCollision(enemy, e))
 			{
 				//お互いにヒット通知
-				enemy->Hit();
-				e->Hit();
+				enemy->Hit(e);
+				e->Hit(enemy);
 			}
 		}
 	}
@@ -311,7 +307,7 @@ void GameObjectManager::RemoveDeadGameObjects()
 		++b;
 	}
 
-	for (auto s = _sumis.begin();s != _sumis.end();++s)
+	for (auto s = _sumis.begin();s != _sumis.end(); ++s)
 	{
 		if ((*s)->IsDead())
 		{

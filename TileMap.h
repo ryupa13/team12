@@ -26,8 +26,8 @@ private:
 public:
 	//インスタンスの取得
 	static TileMap& Instance();
-
-	void Start();
+	
+	void Start(const std::string& str);
 
 	void Render();
 

@@ -47,6 +47,7 @@ public:
 public:
 	Vector2 _position;		//	座標
 	Vector2 _size;			//	サイズ
+	Vector2 _rectSize;
 	Vector2 _rectPosition; //切り抜き始める位置
 	float _radius;			//	半径
 	Vector2 _velocity;
@@ -66,5 +67,5 @@ public:
 		Sumi,
 	};
 	Kind _kind;
-	//int _
+	int _isEnemy; //敵同士の衝突判定の同一Enemy識別用
 };

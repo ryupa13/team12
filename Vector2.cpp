@@ -44,9 +44,17 @@ Vector2& Vector2::operator -= (const Vector2& vec) {
 Vector2 Vector2::operator*(const float & scale)
 {
 	Vector2 t(this->x * scale, this->y * scale);
+	
+	return t;
+}
+
+Vector2 Vector2::operator*(const Vector2 & scale)
+{
+	Vector2 t(this->x * scale.x, this->y * scale.y);
 
 	return t;
 }
+
 //	ƒxƒNƒgƒ‹‚Ì“àÏ
 float Vector2::Dot(const Vector2& vec)
 {

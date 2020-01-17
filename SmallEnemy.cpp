@@ -7,14 +7,15 @@
 void SmallEnemy::Start()
 {
 	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip010.png");
-	_size = Vector2(32, 32);
+	_size = Vector2(63, 63);
 	_rectPosition = Vector2(0, 32);
 	_radius = 16;
 	_state = State::Alive;
 	_kind = Kind::SmallEnemy;
 	_search = SearchState::Free;
-	_searchPlayerRadius = 320;
+	_searchPlayerRadius = 3 * 64;
 	_stateCount = 0;
+	_chaseCount = 0;
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;
@@ -37,15 +38,20 @@ void SmallEnemy::Update()
 		if (_playerPosition.y - _position.y <= _searchPlayerRadius && _playerPosition.y - _position.y >= -_searchPlayerRadius)
 		{
 			_search = SearchState::Chase;
+			_speed = 3;
 		}
 		else
 		{
 			_search = SearchState::Free;
+			_speed = 2;
+			_chaseCount = 0;
 		}
 	}
 	else
 	{
 		_search = SearchState::Free;
+		_speed = 2;
+		_chaseCount = 0;
 	}
 
 	_velocity.Zero();
@@ -55,12 +61,15 @@ void SmallEnemy::Update()
 //ヒット通知
 void SmallEnemy::Hit()
 {
-	_state = State::Dead;
+	//_state = State::Dead;
 }
 
 void SmallEnemy::Hit(GameObject *hitObject)
 {
-
+	if ((*hitObject)._kind == (*hitObject).Player)
+	{
+		_state = State::Dead;
+	}
 }
 
 void SmallEnemy::Hit(bool hitX, bool hitY)
@@ -79,10 +88,264 @@ void SmallEnemy::UpdateVelocity()
 	if (_search == SearchState::Chase)
 	{
 		_playerPosition = GameObjectManager::Instance().GetPlayerPosition();
-		_velocity = _playerPosition - _position;
-		if(_velocity.Magnitude() != 0)
-			_velocity = _velocity.Normalized();
-		_velocity = _velocity * -3;
+		_length = _playerPosition - _position;
+
+		switch (_chaseCount)
+		{
+		case 0: //逃げる方向決定
+			//縦横どっちに逃げるか
+			if (_length.x > _length.y) //縦
+			{
+				//プレイヤーの上下どちらかに居るか
+				if (_playerPosition.y > _position.y) //上
+				{
+					_stateCount = 1;
+					_chaseCount = 1;
+				}
+				else //下
+				{
+					_stateCount = 2;
+					_chaseCount = 2;
+				}
+			}
+			else //横
+			{
+				//プレイヤーの左右どちらかに居るか
+				if (_playerPosition.x > _position.x) //左
+				{
+					_stateCount = 3;
+					_chaseCount = 3;
+				}
+				else //右
+				{
+					_stateCount = 4;
+					_chaseCount = 4;
+				}
+			}
+			break;
+		case 1: //上
+			_velocity.y = -1;
+			//壁に当たっていたら
+			if (_hitWallY)
+			{
+				//プレイヤーの左右どちらかに居るか
+				if (_playerPosition.x > _position.x) //左
+				{
+					_velocity.x = -1;
+					_stateCount = 3;
+					_chaseCount = 3;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+				else //右
+				{
+					_velocity.x = 1;
+					_stateCount = 4;
+					_chaseCount = 4;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_stateCount = 3;
+						}
+					}
+				}
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			break;
+		case 2: //下
+			_velocity.y = 1;
+			//壁に当たっていたら
+			if (_hitWallY)
+			{
+				//プレイヤーの左右どちらかに居るか
+				if (_playerPosition.x > _position.x) //左
+				{
+					_velocity.x = -1;
+					_stateCount = 3;
+					_chaseCount = 3;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+				else //右
+				{
+					_velocity.x = 1;
+					_stateCount = 4;
+					_chaseCount = 4;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			break;
+		case 3: //左
+			_velocity.x = -1;
+			//壁に当たっていたら
+			if (_hitWallX)
+			{
+				//プレイヤーの上下どちらかに居るか
+				if (_playerPosition.y > _position.y) //上
+				{
+					_velocity.y = -1;
+					_stateCount = 1;
+					_chaseCount = 1;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_stateCount = 2;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+				else //下
+				{
+					_velocity.y = 1;
+					_stateCount = 2;
+					_chaseCount = 2;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			break;
+		case 4: //右
+			_velocity.x = 1;
+			//壁に当たっていたら
+			if (_hitWallX)
+			{
+				//プレイヤーの上下どちらかに居るか
+				if (_playerPosition.y > _position.y) //上
+				{
+					_velocity.y = -1;
+					_stateCount = 1;
+					_chaseCount = 1;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+				else //下
+				{
+					_velocity.y = 1;
+					_stateCount = 2;
+					_chaseCount = 2;
+					
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+				break;
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+		default:
+			break;
+		}
 	}
 	else if (_search == SearchState::Free)
 	{
@@ -90,53 +353,86 @@ void SmallEnemy::UpdateVelocity()
 		switch (_stateCount)
 		{
 		case 0://最初の移動
-			_velocity.x -= 1;
-			if (_hitWallX == true)
+			_velocity.x = 1;
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			if (_hitWallX)
 			{
 				//横壁にぶつかったら
 				_stateCount = 1;
 			}
 			break;
-		case 1://方向決定
-			//変数にランダムな値を格納
-			_rnd = GetRand(1);
-			_stateCount = 2;
-			break;
-		case 2:	//縦移動
-			if (_rnd == 0)
+		case 1: //上
+			_velocity.y = -1;
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			if (_hitWallY)
 			{
-				_velocity.y += 1;
-			}
-			else if (_rnd == 1)
-			{
-				_velocity.y -= 1;
-			}
-
-			if (_hitWallY == true)
-			{
-				//縦壁にぶつかったら
-				_stateCount = 3;
+				_rnd = GetRand(1);
+				if (_rnd == 0)
+				{
+					_stateCount = 3;
+				}
+				else
+				{
+					_stateCount = 4;
+				}
 			}
 			break;
-		case 3://方向決定
-			//変数にランダムな値を格納
-			_rnd = GetRand(1);
-			_stateCount = 4;
+		case 2:	//下
+			_velocity.y = 1;
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			if (_hitWallY)
+			{
+				_rnd = GetRand(1);
+				if (_rnd == 0)
+				{
+					_stateCount = 3;
+				}
+				else
+				{
+					_stateCount = 4;
+				}
+			}
 			break;
-		case 4: //横移動
-			if (_rnd == 0)
+		case 3: //左
+			_velocity.x = -1;
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			if (_hitWallX)
 			{
-				_velocity.x += 1;
+				_rnd = GetRand(1);
+				if (_rnd == 0)
+				{
+					_stateCount = 1;
+				}
+				else
+				{
+					_stateCount = 2;
+				}
 			}
-			else if (_rnd == 1)
+			break;
+		case 4: //右
+			_velocity.x = 1;
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			if (_hitWallX)
 			{
-				_velocity.x -= 1;
-			}
-
-			//縦壁にぶつかったら
-			if (_hitWallX == true)
-			{
-				_stateCount = 1;
+				_rnd = GetRand(1);
+				if (_rnd == 0)
+				{
+					_stateCount = 1;
+				}
+				else
+				{
+					_stateCount = 2;
+				}
 			}
 			break;
 
