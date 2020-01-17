@@ -1,3 +1,4 @@
-﻿  StageSelectScene.cpp
-c:\team\stageselectscene.cpp(74): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+﻿  Enemy.cpp
+  SmallEnemy.cpp
+  コードを生成中...
   ActionPractice.vcxproj -> C:\team\x64\Debug\ActionPractice.exe

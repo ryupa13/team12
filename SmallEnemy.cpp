@@ -9,6 +9,7 @@ void SmallEnemy::Start()
 	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip010.png");
 	_size = Vector2(63, 63);
 	_rectPosition = Vector2(0, 32);
+	_rectSize = Vector2(64, 64);
 	_radius = 32;
 	_state = State::Alive;
 	_kind = Kind::SmallEnemy;
@@ -26,7 +27,7 @@ void SmallEnemy::Start()
 void SmallEnemy::Render()
 {
 	//エネミーの描画
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _rectSize);
 }
 
 //更新

@@ -9,11 +9,13 @@ void Enemy::Start()
 	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip019b.png");
 	_size = Vector2(63, 63);
 	_rectPosition = Vector2(0, 32);
-	_radius = 16;
+	_rectSize = Vector2(64, 64);
+	_radius = 32;
 	_state = State::Alive;
 	_kind = Kind::Enemy;
 	_search = SearchState::Free;
-	_searchPlayerRadius = 160;
+	_searchPlayerRadius = 64 * 2 + 32;
+	_searchInkRadius = 64 * 4 + 32;
 	_stateCount = 0;
 	_hitWallX = false;
 	_hitWallY = false;
@@ -24,7 +26,7 @@ void Enemy::Start()
 void Enemy::Render()
 {
 	//エネミーの描画
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _rectSize);
 }
 
 //更新
