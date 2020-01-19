@@ -37,6 +37,7 @@ public:
 	Vector2 GetPlayerSize();
 	Vector2 GetPlayerVelocity();
 	bool GetClearFlag();
+	Vector2 SearchSumis(Vector2 pos, float rad);
 
 private:
 	//プレイヤーとエネミーの当たり判定

@@ -30,6 +30,7 @@ void Sumi::Start()
 {
 	_sumiImage = GraphFactory::Instance().LoadGraph("img\\tama.png");
 	_bombImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+	_rectPosition = Vector2(0, 0);
 	_animFrameCount = 0;
 	_radius = 32;
 	_state = State::Alive;
@@ -45,7 +46,7 @@ void Sumi::Render()
 	}
 	if (_state == State::Bomb)
 	{
-		Renderer::Instance().DrawGraph(_bombImage, _position);
+		Renderer::Instance().DrawGraph(_bombImage, _position, _rectPosition, _size);
 	}
 }
 

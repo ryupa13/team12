@@ -23,6 +23,8 @@ public:
 	void Hit() override;
 	void Hit(GameObject *hitObject) override;
 	void Hit(bool hitX, bool hitY) override;
+	
+	void InkSearch(Vector2 inkPosition);
 
 	//‰ð•ú
 	void Release() override;
@@ -56,4 +58,5 @@ public:
 	float _speed;
 	Vector2 _length;
 	int _count;
+	Vector2 _inkPosition;
 };

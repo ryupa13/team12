@@ -1,8 +1,14 @@
-﻿  Enemy.cpp
-<<<<<<< HEAD
+﻿  Block.cpp
+  Collision.cpp
+  Enemy.cpp
+  GameObjectManager.cpp
+  GameScene.cpp
+  Player.cpp
   SmallEnemy.cpp
+  Sumi.cpp
+c:\team\sumi.cpp(26): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  SumiShot.cpp
+  WinMain.cpp
   コードを生成中...
+c:\team\gameobjectmanager.cpp(388): warning C4715: 'GameObjectManager::GetClearFlag': 値を返さないコントロール パスがあります。
   ActionPractice.vcxproj -> C:\team\x64\Debug\ActionPractice.exe
-=======
-  ActionPractice.vcxproj -> C:\Users\KPC-018A1702\Desktop\12月・１月\12.1\x64\Debug\ActionPractice.exe
->>>>>>> 14ef6b3f95845817dab2b74fc693139a71eedf26

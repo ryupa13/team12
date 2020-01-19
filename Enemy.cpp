@@ -37,12 +37,23 @@ void Enemy::Update()
 	Vector2 centerPosition = _position + Vector2(32, 32);
 	Vector2 centerPlayerPosition = _playerPosition + Vector2(32, 32);
 
-	if (centerPlayerPosition.x - centerPosition.x <= _searchPlayerRadius && centerPlayerPosition.x - centerPosition.x >= -_searchPlayerRadius)
+	InkSearch(GameObjectManager::Instance().SearchSumis(_position, _searchInkRadius));
+
+	if (_search != SearchState::Ink)
 	{
-		if (centerPlayerPosition.y - centerPosition.y <= _searchPlayerRadius && centerPlayerPosition.y - centerPosition.y >= -_searchPlayerRadius)
+		if (centerPlayerPosition.x - centerPosition.x <= _searchPlayerRadius && centerPlayerPosition.x - centerPosition.x >= -_searchPlayerRadius)
 		{
-			_search = SearchState::Chase;
-			_speed = 3;
+			if (centerPlayerPosition.y - centerPosition.y <= _searchPlayerRadius && centerPlayerPosition.y - centerPosition.y >= -_searchPlayerRadius)
+			{
+				_search = SearchState::Chase;
+				_speed = 3;
+			}
+			else
+			{
+				_search = SearchState::Free;
+				_speed = 2;
+				_chaseCount = 0;
+			}
 		}
 		else
 		{
@@ -51,27 +62,21 @@ void Enemy::Update()
 			_chaseCount = 0;
 		}
 	}
-	else
-	{
-		_search = SearchState::Free;
-		_speed = 2;
-		_chaseCount = 0;
-	}
 
 
 	if (_state == State::Bomb)
 	{
-		 _speed = 0;
-		 _count++;
-		 if (_count > 60)
-		 {
-			 _state = State::Alive;
-			 _speed = 2;
-			 _count = 0;
-		 }
+		_speed = 0;
+		_count++;
+		if (_count > 60)
+		{
+			_state = State::Alive;
+			_speed = 2;
+			_count = 0;
+		}
 	}
 
-	
+
 	_velocity.Zero();
 	UpdateVelocity();
 }
@@ -92,12 +97,25 @@ void Enemy::Hit(GameObject *hitObject)
 	{
 		_state = State::Bomb;
 	}
-	
+
 }
 
 void Enemy::Hit(bool hitX, bool hitY)
 {
 	UpdatePosition(hitX, hitY);
+}
+
+void Enemy::InkSearch(Vector2 inkPosition)
+{
+	if (inkPosition.Magnitude() == 0)
+	{
+		_search = SearchState::Free;
+		return;
+	}
+
+	_search = SearchState::Ink;
+	_speed = 3;
+	_inkPosition = inkPosition;
 }
 
 //‰ð•ú
@@ -459,6 +477,267 @@ void Enemy::UpdateVelocity()
 			}
 			break;
 
+		default:
+			break;
+		}
+	}
+	else if (_search == SearchState::Ink)
+	{
+		_length = _inkPosition - _position;
+
+		switch (_chaseCount)
+		{
+		case 0: //•ûŒüŒˆ’è
+			//c‰¡
+			if (_length.x > _length.y) //c
+			{
+				//–n‚Ìã‰º‚Ç‚¿‚ç‚©‚É‹‚é‚©
+				if (_inkPosition.y > _position.y) //ã
+				{
+					_stateCount = 2;
+					_chaseCount = 2;
+				}
+				else //‰º
+				{
+					_stateCount = 1;
+					_chaseCount = 1;
+				}
+			}
+			else //‰¡
+			{
+				//–n‚Ì¶‰E‚Ç‚¿‚ç‚©‚É‹‚é‚©
+				if (_inkPosition.x > _position.x) //¶
+				{
+					_stateCount = 4;
+					_chaseCount = 4;
+				}
+				else //‰E
+				{
+					_stateCount = 3;
+					_chaseCount = 3;
+				}
+			}
+			break;
+		case 1: //ã
+			_velocity.y = -1;
+			//•Ç‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+			if (_hitWallY)
+			{
+				//–n‚Ì¶‰E‚Ç‚¿‚ç‚©‚É‹‚é‚©
+				if (_inkPosition.x > _position.x) //¶
+				{
+					_velocity.x = 1;
+					_stateCount = 4;
+					_chaseCount = 4;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+				else //‰E
+				{
+					_velocity.x = -1;
+					_stateCount = 3;
+					_chaseCount = 3;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_stateCount = 4;
+						}
+					}
+				}
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			break;
+		case 2: //‰º
+			_velocity.y = 1;
+			//•Ç‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+			if (_hitWallY)
+			{
+				//–n‚Ì¶‰E‚Ç‚¿‚ç‚©‚É‹‚é‚©
+				if (_inkPosition.x > _position.x) //¶
+				{
+					_velocity.x = 1;
+					_stateCount = 4;
+					_chaseCount = 4;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+				else //‰E
+				{
+					_velocity.x = -1;
+					_stateCount = 3;
+					_chaseCount = 3;
+
+					if (_hitWallX)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			break;
+		case 3: //¶
+			_velocity.x = -1;
+			//•Ç‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+			if (_hitWallX)
+			{
+				//–n‚Ìã‰º‚Ç‚¿‚ç‚©‚É‹‚é‚©
+				if (_inkPosition.y > _position.y) //ã
+				{
+					_velocity.y = 1;
+					_stateCount = 2;
+					_chaseCount = 2;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_stateCount = 1;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+				else //‰º
+				{
+					_velocity.y = -1;
+					_stateCount = 1;
+					_chaseCount = 1;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = 1;
+							_stateCount = 4;
+							_chaseCount = 4;
+						}
+					}
+				}
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
+			break;
+		case 4: //‰E
+			_velocity.x = 1;
+			//•Ç‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+			if (_hitWallX)
+			{
+				//–n‚Ìã‰º‚Ç‚¿‚ç‚©‚É‹‚é‚©
+				if (_inkPosition.y > _position.y) //ã
+				{
+					_velocity.y = 1;
+					_stateCount = 2;
+					_chaseCount = 2;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = -1;
+							_stateCount = 1;
+							_chaseCount = 1;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+				else //‰º
+				{
+					_velocity.y = -1;
+					_stateCount = 1;
+					_chaseCount = 1;
+
+					if (_hitWallY)
+					{
+						if (_length.x > _length.y)
+						{
+							_velocity.y = 1;
+							_stateCount = 2;
+							_chaseCount = 2;
+						}
+						else
+						{
+							_velocity.x = -1;
+							_stateCount = 3;
+							_chaseCount = 3;
+						}
+					}
+				}
+				break;
+			}
+			if (_velocity.Magnitude() != 0)
+				_velocity = _velocity.Normalized();
+			_velocity = _velocity * _speed;
 		default:
 			break;
 		}

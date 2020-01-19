@@ -386,3 +386,33 @@ bool GameObjectManager::GetClearFlag()
 		return false;
 	}
 }
+
+Vector2 GameObjectManager::SearchSumis(Vector2 pos, float searchRad)
+{
+	Vector2 centerEnemy = pos + Vector2(32, 32);
+	float distanceA;
+	float distanceB = 10000;
+	Vector2 distanceBPosition = Vector2(0, 0);
+
+	for (auto s : _sumis)
+	{
+		Vector2 centerSumi = s->Position() + Vector2(32, 32);
+
+		if (centerSumi.x - centerEnemy.x <= searchRad && centerSumi.x - centerEnemy.x >= -searchRad)
+		{
+			if (centerSumi.y - centerEnemy.y <= searchRad && centerSumi.y - centerEnemy.y >= -searchRad)
+			{
+				distanceA = centerEnemy.Distance(centerSumi);
+
+				if (distanceA < distanceB)
+				{
+					//distanceB‚Éˆê”Ô¬‚³‚¢•¨‚ª—ˆ‚é‚æ‚¤‚É‚·‚é
+					distanceB = distanceA;
+					distanceBPosition = s->Position();
+				}
+			}
+		}
+	}
+
+	return distanceBPosition;
+}
