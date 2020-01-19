@@ -87,6 +87,10 @@ void Player::Hit(GameObject *hitObject)
 	{
 		_state = State::Clear;
 	}
+	if ((*hitObject)._kind == (*hitObject).Enemy)
+	{
+		_state = State::Dead;
+	}
 }
 
 void Player::Hit(bool hitX, bool hitY)

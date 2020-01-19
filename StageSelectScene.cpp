@@ -59,7 +59,7 @@ void StageSelectScene::Update()
 	{
 		_stageNumber += 1;
 
-		if (_stageNumber >= _stageNumberLimit + 1)
+		if (_stageNumber > _stageNumberLimit)
 			_stageNumber = _stageNumberLimit;
 	}
 	if (Input::GetKeyTrigger(KEY_INPUT_LEFT))

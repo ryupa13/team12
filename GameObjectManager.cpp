@@ -104,6 +104,8 @@ void GameObjectManager::Update()
 		}
 	}
 
+	RemoveDeadGameObjects();
+
 	for (auto p : _players)
 	{
 		p->Update();
@@ -116,7 +118,6 @@ void GameObjectManager::Update()
 	HitToCharacters();
 	HitToEnemys();
 	HitToSumis();
-	RemoveDeadGameObjects();
 }
 
 //•`‰æ
@@ -382,6 +383,18 @@ bool GameObjectManager::GetClearFlag()
 		if (p->_kind == p->Player)
 		{
 			return p->IsClear();
+		}
+		return false;
+	}
+}
+
+bool GameObjectManager::GetDeadFlag()
+{
+	for (auto p : _players)
+	{
+		if (p->_kind == p->Player)
+		{
+			return p->IsDead();
 		}
 		return false;
 	}

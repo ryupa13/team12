@@ -1,14 +1,5 @@
-﻿  Block.cpp
-  Collision.cpp
-  Enemy.cpp
-  GameObjectManager.cpp
-  GameScene.cpp
-  Player.cpp
-  SmallEnemy.cpp
-  Sumi.cpp
-c:\team\sumi.cpp(26): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
-  SumiShot.cpp
+﻿  ClearScene.cpp
+c:\team\clearscene.cpp(70): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   WinMain.cpp
   コードを生成中...
-c:\team\gameobjectmanager.cpp(388): warning C4715: 'GameObjectManager::GetClearFlag': 値を返さないコントロール パスがあります。
   ActionPractice.vcxproj -> C:\team\x64\Debug\ActionPractice.exe

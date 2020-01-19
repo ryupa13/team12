@@ -1,8 +1,8 @@
 #pragma once
 #include "BaseScene.h"
 
-//ゲームクリアシーン
-class ClearScene : public BaseScene
+//ゲームオーバーシーン
+class GameOverScene : public BaseScene
 {
 public:
 	//初期化
@@ -16,7 +16,7 @@ public:
 
 private:
 	//画像のハンドル
-	int _clearImage;
+	int _gameoverImage;
 	int _squareImage;
 	int _frameImage;
 

@@ -1,4 +1,4 @@
-#include "ClearScene.h"
+#include "GameOverScene.h"
 #include "DxLib.h"
 #include "GraphFactory.h"
 #include "SceneManager.h"
@@ -6,10 +6,10 @@
 #include "Renderer.h"
 #include "WindowInfo.h"
 
-void ClearScene::Initialize()
+void GameOverScene::Initialize()
 {
 	//背景画像
-	_clearImage = GraphFactory::Instance().LoadGraph("img\\clear.png");
+	_gameoverImage = GraphFactory::Instance().LoadGraph("img\\fould.png");
 	//四角画像
 	_squareImage = GraphFactory::Instance().LoadGraph("img\\square2.png");
 	//枠画像
@@ -19,18 +19,12 @@ void ClearScene::Initialize()
 	_cursorNumber = 0;
 }
 
-void ClearScene::Release()
-{
-	GraphFactory::Instance().EraseGraph("img\\clear.png");
-	GraphFactory::Instance().EraseGraph("img\\square2.png");
-	GraphFactory::Instance().EraseGraph("img\\frame2.png");
-}
-
-void ClearScene::Update()
+void GameOverScene::Update()
 {
 	//背景を表示する
-	Renderer::Instance().DrawGraph(_clearImage, Vector2());
+	Renderer::Instance().DrawGraph(_gameoverImage, Vector2());
 	//選択肢を表示する
+	Renderer::Instance().DrawGraph(_squareImage, Vector2(WindowInfo::WindowWidth / 2 - 450, 194));
 	Renderer::Instance().DrawGraph(_squareImage, Vector2(WindowInfo::WindowWidth / 2 - 450, 364));
 	Renderer::Instance().DrawGraph(_squareImage, Vector2(WindowInfo::WindowWidth / 2 - 450, 534));
 
@@ -39,10 +33,13 @@ void ClearScene::Update()
 	{
 		switch (_cursorNumber)
 		{
-		case 0: //タイトル
+		case 0: //リトライ
+			SceneManager::Instance().LoadScene("Game");
+			break;
+		case 1: //タイトル
 			SceneManager::Instance().LoadScene("Title");
 			break;
-		case 1: //ステージ選択
+		case 2: //ステージ選択
 			SceneManager::Instance().LoadScene("Select");
 			break;
 		default:
@@ -55,8 +52,8 @@ void ClearScene::Update()
 	{
 		_cursorNumber += 1;
 
-		if (_cursorNumber > 1)
-			_cursorNumber = 1;
+		if (_cursorNumber > 2)
+			_cursorNumber = 2;
 	}
 	if (Input::GetKeyTrigger(KEY_INPUT_UP))
 	{
@@ -67,5 +64,12 @@ void ClearScene::Update()
 	}
 
 	//カーソルの描画
-	Renderer::Instance().DrawGraph(_frameImage, Vector2(WindowInfo::WindowWidth / 2 - 450, 364 + _cursorNumber * 170));
+	Renderer::Instance().DrawGraph(_frameImage, Vector2(WindowInfo::WindowWidth / 2 - 450, 194 + _cursorNumber * 170));
+}
+
+void GameOverScene::Release()
+{
+	GraphFactory::Instance().EraseGraph("img\\fould.png");
+	GraphFactory::Instance().EraseGraph("img\\square2.png");
+	GraphFactory::Instance().EraseGraph("img\\frame2.png");
 }
