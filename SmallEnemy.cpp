@@ -9,7 +9,8 @@ void SmallEnemy::Start()
 	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip010.png");
 	_size = Vector2(63, 63);
 	_rectPosition = Vector2(0, 32);
-	_radius = 16;
+	_rectSize = Vector2(64, 64);
+	_radius = 32;
 	_state = State::Alive;
 	_kind = Kind::SmallEnemy;
 	_search = SearchState::Free;
@@ -19,19 +20,21 @@ void SmallEnemy::Start()
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;
+	_inkCount = 100;
 }
 
 //描画
 void SmallEnemy::Render()
 {
 	//エネミーの描画
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _rectSize);
 }
 
 //更新
 void SmallEnemy::Update()
 {
 	_playerPosition = GameObjectManager::Instance().GetPlayerPosition();
+	_inkCount++;
 
 	if (_playerPosition.x - _position.x <= _searchPlayerRadius && _playerPosition.x - _position.x >= -_searchPlayerRadius)
 	{
@@ -69,6 +72,36 @@ void SmallEnemy::Hit(GameObject *hitObject)
 	if ((*hitObject)._kind == (*hitObject).Player)
 	{
 		_state = State::Dead;
+	}
+	if ((*hitObject)._kind == (*hitObject).Sumi)
+	{
+		if (_inkCount < 100)
+			return;
+
+		switch (_stateCount)
+		{
+		case 0:
+			break;
+		case 1: //上
+			_stateCount = 2;
+			_chaseCount = 2;
+			break;
+		case 2: //下
+			_stateCount = 1;
+			_chaseCount = 1;
+			break;
+		case 3: //左
+			_stateCount = 4;
+			_chaseCount = 4;
+			break;
+		case 4: //右
+			_stateCount = 3;
+			_chaseCount = 3;
+			break;
+		default:
+			break;
+		}
+		_inkCount = 0;
 	}
 }
 

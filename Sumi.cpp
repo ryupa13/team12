@@ -11,9 +11,9 @@ Sumi::Sumi(Vector2 pos,Vector2 velocity)
 {
 	_position = pos;
 	_velocity = velocity;
-	_size = Vector2(32, 32);
+	_size = Vector2(64, 64);
 	//_position.x += _size.x;
-	_position =_position + velocity * 32;
+	_position =_position + velocity * _size;
 }
 
 Sumi::Sumi(Vector2 pos, float angle)
@@ -30,10 +30,13 @@ void Sumi::Start()
 {
 	_sumiImage = GraphFactory::Instance().LoadGraph("img\\tama.png");
 	_bombImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+
 	_desImage = GraphFactory::Instance().LoadGraph("img\\frame.png");
+
+	_rectPosition = Vector2(0, 0);
+
 	_animFrameCount = 0;
-	_radius = 8;
-	//_size = Vector2(32, 32);
+	_radius = 32;
 	_state = State::Alive;
 	_kind = Kind::Sumi;
 	count = 0;
@@ -49,7 +52,7 @@ void Sumi::Render()
 	}
 	if (_state == State::Bomb)
 	{
-		Renderer::Instance().DrawGraph(_bombImage, _position);
+		Renderer::Instance().DrawGraph(_bombImage, _position, _rectPosition, _size);
 	}
 	if (_state == State::Dying)
 	{

@@ -67,6 +67,11 @@ float Vector2::Cross(const Vector2& vec)
 	return (x * vec.y) - (y * vec.x);
 }
 
+float Vector2::Distance(const Vector2& vec)
+{
+	return static_cast<float>(sqrt((vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y)));
+}
+
 //	ƒxƒNƒgƒ‹‚Ì’·‚³Žæ“¾
 float Vector2::Magnitude()
 {

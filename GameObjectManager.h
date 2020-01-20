@@ -37,6 +37,8 @@ public:
 	Vector2 GetPlayerSize();
 	Vector2 GetPlayerVelocity();
 	bool GetClearFlag();
+	bool GetDeadFlag();
+	Vector2 SearchSumis(Vector2 pos, float rad);
 
 	//íeä«óù
 	int GetBulletCnt();

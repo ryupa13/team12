@@ -40,6 +40,10 @@ void GameScene::Update()
 	{
 		SceneManager::Instance().LoadScene("Clear");
 	}
+	if (GameObjectManager::Instance().GetDeadFlag())
+	{
+		SceneManager::Instance().LoadScene("Gameover");
+	}
 
 	//キー入力を更新
 	//int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);

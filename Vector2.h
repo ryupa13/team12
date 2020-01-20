@@ -33,6 +33,9 @@ public:
 	//	ベクトルの外積
 	float Cross(const Vector2& vec);
 
+	//2点間の距離
+	float Distance(const Vector2& vec);
+
 	//	ベクトルの長さ取得
 	float Magnitude();
 

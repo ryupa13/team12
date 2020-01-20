@@ -26,7 +26,7 @@ void Player::Start()
 void Player::Render()
 {
 	//	ÉvÉåÉCÉÑÅ[Çï`âÊ
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _size);
+	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _rectSize);
 	_sumishot.Render();
 }
 
@@ -89,6 +89,10 @@ void Player::Hit(GameObject *hitObject)
 	if ((*hitObject)._kind == (*hitObject).SmallEnemy)
 	{
 		_state = State::Clear;
+	}
+	if ((*hitObject)._kind == (*hitObject).Enemy)
+	{
+		_state = State::Dead;
 	}
 }
 

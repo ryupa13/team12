@@ -107,6 +107,8 @@ void GameObjectManager::Update()
 		}
 	}
 
+	RemoveDeadGameObjects();
+
 	for (auto p : _players)
 	{
 		p->Update();
@@ -124,8 +126,10 @@ void GameObjectManager::Update()
 	HitToCharacters();
 	HitToEnemys();
 	HitToSumis();
+
 	
 	RemoveDeadGameObjects();
+
 }
 
 //•`‰æ
@@ -398,7 +402,51 @@ bool GameObjectManager::GetClearFlag()
 	}
 }
 
+
 int GameObjectManager::GetBulletCnt()
 {
 	return bulletcnt;
 }
+
+bool GameObjectManager::GetDeadFlag()
+{
+	for (auto p : _players)
+	{
+		if (p->_kind == p->Player)
+		{
+			return p->IsDead();
+		}
+		return false;
+	}
+}
+
+Vector2 GameObjectManager::SearchSumis(Vector2 pos, float searchRad)
+{
+	Vector2 centerEnemy = pos + Vector2(32, 32);
+	float distanceA;
+	float distanceB = 10000;
+	Vector2 distanceBPosition = Vector2(0, 0);
+
+	for (auto s : _sumis)
+	{
+		Vector2 centerSumi = s->Position() + Vector2(32, 32);
+
+		if (centerSumi.x - centerEnemy.x <= searchRad && centerSumi.x - centerEnemy.x >= -searchRad)
+		{
+			if (centerSumi.y - centerEnemy.y <= searchRad && centerSumi.y - centerEnemy.y >= -searchRad)
+			{
+				distanceA = centerEnemy.Distance(centerSumi);
+
+				if (distanceA < distanceB)
+				{
+					//distanceB‚Éˆê”Ô¬‚³‚¢•¨‚ª—ˆ‚é‚æ‚¤‚É‚·‚é
+					distanceB = distanceA;
+					distanceBPosition = s->Position();
+				}
+			}
+		}
+	}
+
+	return distanceBPosition;
+}
+

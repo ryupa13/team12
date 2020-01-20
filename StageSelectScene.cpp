@@ -38,13 +38,13 @@ void StageSelectScene::Update()
 		switch (_stageNumber)
 		{
 		case 0:
-			TileMap::Instance().Start("stage\\map.csv");
+			TileMap::Instance().Start("stage\\stage01.csv");
 			break;
 		case 1:
-			TileMap::Instance().Start("stage\\SampleStage.csv");
+			TileMap::Instance().Start("stage\\stage02.csv");
 			break;
 		case 2:
-			TileMap::Instance().Start("stage\\SampleStage2.csv");
+			TileMap::Instance().Start("stage\\stage03.csv");
 			break;
 		default:
 			break;
@@ -59,7 +59,7 @@ void StageSelectScene::Update()
 	{
 		_stageNumber += 1;
 
-		if (_stageNumber >= _stageNumberLimit + 1)
+		if (_stageNumber > _stageNumberLimit)
 			_stageNumber = _stageNumberLimit;
 	}
 	if (Input::GetKeyTrigger(KEY_INPUT_LEFT))

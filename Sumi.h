@@ -26,6 +26,7 @@ public:
 	void Hit() override;
 	void Hit(bool hitX, bool hitY) override;
 	void Hit(GameObject *hitObject) override;
+
 	void UpdatePosition(bool hitX, bool hitY);
 
 private:
