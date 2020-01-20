@@ -30,11 +30,14 @@ void Sumi::Start()
 {
 	_sumiImage = GraphFactory::Instance().LoadGraph("img\\tama.png");
 	_bombImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+	_desImage = GraphFactory::Instance().LoadGraph("img\\frame.png");
 	_animFrameCount = 0;
 	_radius = 8;
 	//_size = Vector2(32, 32);
 	_state = State::Alive;
 	_kind = Kind::Sumi;
+	count = 0;
+	descount = 0;
 }
 
 void Sumi::Render()
@@ -48,6 +51,10 @@ void Sumi::Render()
 	{
 		Renderer::Instance().DrawGraph(_bombImage, _position);
 	}
+	if (_state == State::Dying)
+	{
+		Renderer::Instance().DrawGraph(_desImage, _position);
+	}
 }
 
 void Sumi::Update()
@@ -57,6 +64,19 @@ void Sumi::Update()
 	auto sheetNo = _animFrameCount / AnimationSpeed;
 	_offset.x = (sheetNo % HorizonSheet) * _size.x;
 	_offset.y = ((sheetNo / HorizonSheet) % VerticalSheet) * _size.y;
+	
+	
+	if (_state == State::Dying)
+	{
+		descount++;
+		if (descount == 5)
+		{
+			descount = 0;
+			_state = State::Dead;
+			
+		}
+	}
+
 	
 	//_position += _velocity;
 }
@@ -86,9 +106,9 @@ void Sumi::Hit(GameObject * hitObject)
 	{
 		_state = State::Bomb;
 	}
-	if ((*hitObject)._kind == (*hitObject).Enemy)
+	if ((*hitObject)._kind == (*hitObject).Enemy || (*hitObject)._state == State::Bomb && (*hitObject)._kind == (*hitObject).Enemy)
 	{
-		_state = State::Dead;
+		_state = State::Dying;
 	}
 }
 

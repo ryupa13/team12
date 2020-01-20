@@ -67,6 +67,9 @@ void GameObjectManager::Start()
 		continue;
 		++s;
 	}
+
+	bulletcnt = 0;
+	bulletcntlimit = 5;
 }
 
 //XV
@@ -112,10 +115,16 @@ void GameObjectManager::Update()
 	{
 		e->Update();
 	}
+	for (auto s : _sumis)
+	{
+		s->Update();
+	}
+	bulletcnt = bulletcntlimit - _sumis.size();
 
 	HitToCharacters();
 	HitToEnemys();
 	HitToSumis();
+	
 	RemoveDeadGameObjects();
 }
 
@@ -134,6 +143,7 @@ void GameObjectManager::Render()
 	{
 		s->Render();
 	}
+    
 }
 
 //’Ç‰Á
@@ -317,6 +327,7 @@ void GameObjectManager::RemoveDeadGameObjects()
 	}
 }
 
+
 void GameObjectManager::TileMapCollision()
 {
 	for (auto p : _players)
@@ -385,4 +396,9 @@ bool GameObjectManager::GetClearFlag()
 		}
 		return false;
 	}
+}
+
+int GameObjectManager::GetBulletCnt()
+{
+	return bulletcnt;
 }

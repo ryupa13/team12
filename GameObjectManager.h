@@ -38,6 +38,9 @@ public:
 	Vector2 GetPlayerVelocity();
 	bool GetClearFlag();
 
+	//弾管理
+	int GetBulletCnt();
+
 private:
 	//プレイヤーとエネミーの当たり判定
 	void HitToCharacters();
@@ -54,6 +57,8 @@ private:
 	//死亡オブジェクトの削除
 	void RemoveDeadGameObjects();
 
+	
+
 private:
 	std::list<GameObject*> _players; //プレイヤーリスト
 	std::list<GameObject*> _enemys;  //エネミーリスト
@@ -62,4 +67,6 @@ private:
 	std::list<GameObject*> _sumis; //墨リスト
 
 	Collision _collision;
+	int bulletcnt;
+	int bulletcntlimit;
 };

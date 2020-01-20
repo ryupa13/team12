@@ -43,6 +43,12 @@ public:
 			return true;
 		return false;
 	}
+	bool IsDying() const
+	{
+		if (_state == State::Dying)
+			return true;
+		return false;
+	}
 
 public:
 	Vector2 _position;		//	À•W
@@ -56,7 +62,8 @@ public:
 		Alive, //¶‘¶
 		Dead,  //€–S
 		Clear,//ƒNƒŠƒA
-		Bomb
+		Bomb,//–n
+		Dying,//€‚ÉÛ
 	};
 	State _state;
 	enum Kind

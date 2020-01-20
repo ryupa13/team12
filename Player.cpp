@@ -3,6 +3,7 @@
 #include "GraphFactory.h"
 #include "Renderer.h"
 #include "Input.h"
+#include"GameObjectManager.h"
 
 //	‰Šú‰»ˆ—
 void Player::Start()
@@ -46,12 +47,14 @@ void Player::Update()
 		{
 			_velocity = _maps[pDirection];
 		}
-		if (count < 100)
+		if ( GameObjectManager::Instance().GetBulletCnt() >0)
 		{
 			_sumishot.Shot(_position,_maps[pDirection]);
-			count++;
+			
 		}
 	}
+
+	
 }
 
 void Player::UpdateMotion()

@@ -37,6 +37,8 @@ private:
 	Vector2 _velocity;
 	int _sumiImage;
 	int _bombImage;
+	int _desImage;
 	int _animFrameCount;
 	int count;
+	int descount;
 };

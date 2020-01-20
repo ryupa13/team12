@@ -29,17 +29,17 @@ void SumiShot::Shot(const Vector2 & pos, float angle)
 void SumiShot::Update()
 {
 	
-	//for (auto it = _shotList.begin(); it != _shotList.end();) {
-	//	(*it)->Update();
+	/*for (auto it = _shotList.begin(); it != _shotList.end();) {
+		(*it)->Update();
 
-	//	if ((*it)->Position().x > WindowInfo::WindowWidth)
-	//	{
-	//		delete *it;
-	//		it = _shotList.erase(it);
-	//		continue;
-	//	}
-	//	++it;
-	//}
+		if ((*it)->Position().x > WindowInfo::WindowWidth)
+		{
+			delete *it;
+			it = _shotList.erase(it);
+			continue;
+		}
+		++it;
+	}*/
 }
 
 void SumiShot::Render()

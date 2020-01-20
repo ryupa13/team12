@@ -7,9 +7,11 @@
 #include "Enemy.h"
 #include "SmallEnemy.h"
 #include "TileMap.h"
+#include"Renderer.h"
 
 void GameScene::Initialize()
 {
+	_gameImage = GraphFactory::Instance().LoadGraph("img\\pipo-charachip005.png");
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
 	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
@@ -25,6 +27,11 @@ void GameScene::Update()
 	//描画
 	TileMap::Instance().Render();
 	GameObjectManager::Instance().Render();
+	
+	for (int i = 1; i < GameObjectManager::Instance().GetBulletCnt() + 1; i++)
+	{
+		Renderer::Instance().DrawGraph(_gameImage, Vector2(WindowInfo::WindowWidth - i * 64, 0), Vector2(0, 0), Vector2(64, 64));
+	}
 
 	//タイルマップとの当たり判定
 	GameObjectManager::Instance().TileMapCollision();
