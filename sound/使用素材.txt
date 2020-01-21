@@ -1,0 +1,8 @@
+【BGM】
+・TitleBGM(Dear Childhood Friend / H/MIX GALLERY)
+・GameSceneBGM(海の揺りかご / H/MIX GALLERY)
+・GameClearBGM(空が海に落ちた話 / M-ART)
+・GameOverBGM( / )
+
+【SE】
+・

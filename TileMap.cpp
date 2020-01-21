@@ -12,9 +12,10 @@ TileMap& TileMap::Instance()
 }
 
 //‰Šú‰»
-void TileMap::Start(const std::string& str)
+void TileMap::Start(const std::string& str, int mapNumber)
 {
 	_map.clear();
+	_mapNumber = mapNumber;
 
 	//‰æ‘œ‚Ì“Ç‚İ‚İ
 	_mapgrp = GraphFactory::Instance().LoadGraph("img\\maptipsample.png");
@@ -192,4 +193,9 @@ std::vector<int> TileMap::Split(const std::string & str, char delim)
 		mapRow.push_back(std::atoi(tmp.c_str()));
 	}
 	return mapRow;
+}
+
+int TileMap::GetMapNumber()
+{
+	return _mapNumber;
 }

@@ -36,13 +36,13 @@ void StageSelectScene::Update()
 		switch (_stageNumber)
 		{
 		case 0:
-			TileMap::Instance().Start("stage\\stage01.csv");
+			TileMap::Instance().Start("stage\\stage01.csv", 0);
 			break;
 		case 1:
-			TileMap::Instance().Start("stage\\stage02.csv");
+			TileMap::Instance().Start("stage\\stage02.csv", 1);
 			break;
 		case 2:
-			TileMap::Instance().Start("stage\\stage03.csv");
+			TileMap::Instance().Start("stage\\stage03.csv", 2);
 			break;
 		default:
 			break;
