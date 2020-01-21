@@ -1,2 +1,3 @@
-﻿  Player.cpp
-  ActionPractice.vcxproj -> C:\チーム制作\x64\Debug\ActionPractice.exe
+﻿  Enemy.cpp
+c:\users\kpc-018a1434\downloads\team12-okuda\enemy.cpp(39): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  ActionPractice.vcxproj -> C:\Users\KPC-018A1434\Downloads\team12-okuda\x64\Debug\ActionPractice.exe

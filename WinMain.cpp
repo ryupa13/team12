@@ -5,13 +5,15 @@
 #include "GameScene.h"
 #include "SceneManager.h"
 #include "ClearScene.h"
+#include "StageSelectScene.h"
+#include "GameOverScene.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	//	Windowモードの設定とWindowタイトルを設定する
 	ChangeWindowMode(true);
-	SetMainWindowText("シーン切り替え");
+	SetMainWindowText("墨");
 
 	//	画面サイズを設定
 	SetGraphMode(WindowInfo::WindowWidth, WindowInfo::WindowHeight, 16);
@@ -28,11 +30,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//シーンを追加する
 	SceneManager::Instance().AddScene("Title", new TitleScene);
+	SceneManager::Instance().AddScene("Select", new StageSelectScene);
 	SceneManager::Instance().AddScene("Game", new GameScene);
 	SceneManager::Instance().AddScene("Clear", new ClearScene);
+	SceneManager::Instance().AddScene("Gameover", new GameOverScene);
 
 	//最初のシーンを登録
-	SceneManager::Instance().StartScene("Title");
+	SceneManager::Instance().StartScene("Select");
 
 	//実行
 	SceneManager::Instance().Update();

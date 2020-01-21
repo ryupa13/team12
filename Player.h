@@ -1,6 +1,9 @@
 #pragma once
 #include "Vector2.h"
 #include "GameObject.h"
+#include"SumiShot.h"
+#include<unordered_map>
+
 
 //	プレイヤークラス
 //	※GameObjectクラスを継承する
@@ -18,25 +21,41 @@ public:
 	//	更新
 	void Update()  override;
 
-	// 解放
+	//　解放
 	void Release()  override;
 
-	//壁にぶつかっているかの判定
-	void UpdatePosition(bool hitX, bool hitY);
+	
 
-	//	速度を取得
-	Vector2 Velocity() {
-		return _velocity;
-	}
+	void UpdateMotion();
+
+	//　ヒット通知
+	void Hit() override;
+	void Hit(GameObject *hitObject) override;
+	void Hit(bool hitX, bool hitY) override;
+
+	//　
+	void UpdatePosition(bool hitX, bool hitY);
+	enum PDirection
+	{
+		DOWN, UP, RIGHT, LEFT,
+	};
+	PDirection pDirection;
 public:
 	//	画像ハンドル
 	int _grp;
-
-	Vector2 _velocity;
-
-	//行動決定カウント
-	int StateCount;
-	bool HitWallX;//横壁にぶつかったか？
-	bool HitWallY;//縦壁にぶつかったか？
-	int rnd;//ランダム格納用変数
+	int count;
+	int su;
+	SumiShot _sumishot;
+	std::unordered_map<PDirection, Vector2>_maps{
+		{PDirection::DOWN,Vector2 (0,1)},
+	{PDirection::UP,Vector2(0,-1)},
+	{PDirection::LEFT,Vector2(-1,0)},
+	{PDirection::RIGHT,Vector2(1,0)}
+	    
+	};
+	
+	int anime[8];
+	int AnimationCount;
+	int ImgIndex;
+	int animenum;
 };

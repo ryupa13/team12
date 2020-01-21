@@ -40,12 +40,21 @@ Vector2& Vector2::operator -= (const Vector2& vec) {
 	return *this;
 }
 
+
 Vector2 Vector2::operator*(const float & scale)
 {
 	Vector2 t(this->x * scale, this->y * scale);
+	
+	return t;
+}
+
+Vector2 Vector2::operator*(const Vector2 & scale)
+{
+	Vector2 t(this->x * scale.x, this->y * scale.y);
 
 	return t;
 }
+
 //	ベクトルの内積
 float Vector2::Dot(const Vector2& vec)
 {
@@ -58,6 +67,11 @@ float Vector2::Cross(const Vector2& vec)
 	return (x * vec.y) - (y * vec.x);
 }
 
+float Vector2::Distance(const Vector2& vec)
+{
+	return static_cast<float>(sqrt((vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y)));
+}
+
 //	ベクトルの長さ取得
 float Vector2::Magnitude()
 {
@@ -68,4 +82,9 @@ float Vector2::Magnitude()
 Vector2 Vector2::Normalized()
 {
 	return{ x / Magnitude() , y / Magnitude() };
+}
+
+void Vector2::Zero()
+{
+	x = 0; y = 0;
 }

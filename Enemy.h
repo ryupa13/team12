@@ -1,29 +1,67 @@
 #pragma once
-#include "Vector2.h"
 #include "GameObject.h"
+#include "Player.h"
 
+//エネミークラス
 class Enemy : public GameObject
 {
 public:
+	//コンストラクタ
+	Enemy() {}
+	Enemy(int isEnemy, Vector2 position) { _isEnemy = isEnemy, _position = position; }
+
+	//開始
 	void Start() override;
 
+	//描画
 	void Render() override;
 
+	//更新
 	void Update() override;
 
+	//ヒット通知
+	void Hit() override;
+	void Hit(GameObject *hitObject) override;
+	void Hit(bool hitX, bool hitY) override;
+	
+	void InkSearch(Vector2 inkPosition);
+
+	//解放
 	void Release() override;
 
+private:
+	void UpdateVelocity();
 	void UpdatePosition(bool hitX, bool hitY);
 
-	Vector2 Velocity() { return _velocity; }
-
 public:
+	//画像ハンドル
 	int _grp;
+	//プレイヤー座標
+	Vector2 _playerPosition;
+	//プレイヤー感知範囲
+	float _searchPlayerRadius;
+	//墨感知範囲
+	float _searchInkRadius;
+	//感知状態
+	enum SearchState
+	{
+		Chase,
+		Free,
+		Ink
+	};
+	SearchState _search;
+	int _stateCount;
+	int _chaseCount;
+	bool _hitWallX;
+	bool _hitWallY;
+	int _rnd;
+	float _speed;
+	Vector2 _length;
+	int _count;
+	Vector2 _inkPosition;
 
-	Vector2 _velocity;
-
-	int StateCount;
-	bool HitWallX;
-	bool HitWallY;
-	int rnd;
+	int anime[8];
+	int count;
+	int ImgIndex;
+	int animenum;
 };

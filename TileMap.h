@@ -12,8 +12,22 @@ struct TileHitInfo
 
 class TileMap
 {
+private:
+	//外部からのインスタンス生成を制限
+	//コンストラクタ
+	TileMap() {}
+
+	//コピーコンストラクタ
+	TileMap(const TileMap&) {}
+
+	//コピー代入演算子
+	TileMap& operator= (const TileMap&) {}
+
 public:
-	void Start();
+	//インスタンスの取得
+	static TileMap& Instance();
+	
+	void Start(const std::string& str);
 
 	void Render();
 

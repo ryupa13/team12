@@ -13,7 +13,13 @@ public:
 
 	//解放
 	void Release();
+
 private:
 	//画像のハンドル
 	int _clearImage;
+	int _squareImage;
+	int _frameImage;
+
+	//カーソル番号
+	int _cursorNumber;
 };

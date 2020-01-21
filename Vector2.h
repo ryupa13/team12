@@ -25,6 +25,7 @@ public:
 
 	//	演算子オーバーロード「*」
 	Vector2 operator*(const float & scale);
+	Vector2 operator*(const Vector2 & scale);
 
 	//	ベクトルの内積
 	float Dot(const Vector2& vec);
@@ -32,11 +33,17 @@ public:
 	//	ベクトルの外積
 	float Cross(const Vector2& vec);
 
+	//2点間の距離
+	float Distance(const Vector2& vec);
+
 	//	ベクトルの長さ取得
 	float Magnitude();
 
 	//	ベクトルの正規化
 	Vector2 Normalized();
+
+	//0にする
+	void Zero();
 
 public:
 	float x;

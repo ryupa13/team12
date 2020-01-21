@@ -4,9 +4,18 @@
 #include<fstream>
 #include<sstream>
 
-//初期化
-void TileMap::Start()
+TileMap& TileMap::Instance()
 {
+	static std::unique_ptr<TileMap> instance(new TileMap());
+
+	return *instance;
+}
+
+//初期化
+void TileMap::Start(const std::string& str)
+{
+	_map.clear();
+
 	//画像の読み込み
 	_mapgrp = GraphFactory::Instance().LoadGraph("img\\maptipsample.png");
 
@@ -33,7 +42,7 @@ void TileMap::Start()
 #pragma endregion
 
 	//マップを読み込む
-	std::ifstream ifs("stage\\SampleStage.csv");
+	std::ifstream ifs(str);
 
 	//ファイルの読み込みに成功したら
 	if (ifs)
@@ -47,6 +56,22 @@ void TileMap::Start()
 
 			//マップ情報を格納
 			_map.push_back(data);
+		}
+
+		int x = 0, y = 0;
+		for (auto row : _map)
+		{
+			x = 0;
+
+			for (auto col : row)
+			{
+				if (col > 0)
+				{
+
+				}
+				x++;
+			}
+			y++;
 		}
 	}
 

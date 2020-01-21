@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include <memory>
 #include "DxLib.h"
+#include "Input.h"
 
 //デストラクタ
 SceneManager::~SceneManager()
@@ -50,6 +51,9 @@ void SceneManager::Update()
 	{
 		//背景をクリアする
 		ClearDrawScreen();
+
+		//Input更新
+		Input::Update();
 
 		//シーンを更新する
 		SceneUpdate();

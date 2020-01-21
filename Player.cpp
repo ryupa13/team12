@@ -1,144 +1,128 @@
 #include <DxLib.h>
 #include "Player.h"
 #include "GraphFactory.h"
+#include "Renderer.h"
+#include "Input.h"
 
 //	初期化処理
 void Player::Start()
 {
-	_grp = GraphFactory::Instance().LoadGraph("img\\pipo-charachip005.png");
-	_size = Vector2(60, 60);
+	_grp = LoadDivGraph("img\\player.png", 8, 2, 4, 64, 64, anime);
+	_rectSize = Vector2(64, 64);
+	_size = Vector2(58, 58);
 	_radius = 16;
 	_position = Vector2(64, 64);
+	_rectPosition = Vector2(0, 64);
 	_velocity = Vector2(0, 0);
-
-
-	StateCount = 0;
-	HitWallX = false;
-	HitWallY = false;
-	rnd = 1234;
+	_state = State::Alive;
+	_kind = Kind::Player;
+	pDirection = PDirection::DOWN;
+	
+	anime[8] = { 0 };
+	count = 0;
+	ImgIndex = 0;
+	animenum = 0;
 }
 
 //	描画
 void Player::Render()
 {
-	//	プレイヤーを描画
-	DrawRectGraph(static_cast<int>(_position.x),
-		static_cast<int>(_position.y), 0, 64,
-		static_cast<int>(_size.x),
-		static_cast<int>(_size.y), _grp, TRUE);
+	ImgIndex = count % 20;
+	ImgIndex /= 10;
+	count += 1;
+
+	DrawGraph(_position.x, _position.y, anime[ImgIndex + (2 * animenum)], TRUE);
+	_sumishot.Render();
 }
+
 
 //	更新
 void Player::Update()
 {
-
 	//	移動量をクリア	
-	_velocity = Vector2(0, 0);
+	_velocity.Zero();
 
-#pragma region  キー入力で移動
-//	キー入力を更新
-int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-// 上キーで前に進む
-if (key & PAD_INPUT_UP) {
-	_velocity.y -= 3;
+	float speed = 3;
+	_velocity = Input::Velocity() * speed;
+	UpdateMotion();
+
+	if (Input::GetKeyTrigger(KEY_INPUT_Z))
+	{
+		if (_velocity.Magnitude() <= 0)
+		{
+			_velocity = _maps[pDirection];
+		}
+		if (count < 100)
+		{
+			_sumishot.Shot(_position,_maps[pDirection]);
+			count++;
+		}
+	}
 }
-//	下キーで後ろに進む
-if (key & PAD_INPUT_DOWN) {
-	_velocity.y += 3;
+
+void Player::UpdateMotion()
+{
+	Vector2  velocity = Input::Velocity();
+	if (velocity.y > 0.0f && (pDirection != PDirection::DOWN))
+	{
+		pDirection = PDirection::DOWN;
+		animenum = 2;
+	}
+	if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
+	{
+		pDirection = PDirection::UP;
+		animenum = 3;
+	}
+	if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
+	{
+		pDirection = PDirection::RIGHT;
+		animenum = 0;
+	}
+	if (velocity.x < 0.0f&& (pDirection != PDirection::LEFT))
+	{
+		pDirection = PDirection::LEFT;
+		animenum = 1;
+	}
 }
-//	右キーで右に移動
-if (key & PAD_INPUT_RIGHT) {
-	_velocity.x += 3;
+
+//　ヒット通知
+void Player::Hit()
+{
+
 }
-//	左キーで右に移動
-if (key & PAD_INPUT_LEFT) {
-	_velocity.x -= 3;
+
+void Player::Hit(GameObject *hitObject)
+{
+	if ((*hitObject)._kind == (*hitObject).SmallEnemy)
+	{
+		_state = State::Clear;
+	}
+	if ((*hitObject)._kind == (*hitObject).Enemy)
+	{
+		_state = State::Dead;
+	}
 }
-#pragma endregion
 
-#pragma region AutoMove
-		////自由移動
-	//switch (StateCount)
-	//{
-	//	case 0://最初の移動
-	//		_velocity.x += 3;
-	//		if (HitWallX == true)
-	//		{
-	//			//横壁にぶつかったら
-	//			StateCount = 1;
-	//		}
-	//		break;
-	//	case 1://方向決定
-	//		//変数にランダムな値を格納
-	//		rnd = GetRand(1);
-	//		StateCount = 2;
-	//		break;
-	//	case 2:	//縦移動
-	//		if (rnd == 0)
-	//		{
-	//			_velocity.y += 3;
-	//		}
-	//		else if (rnd == 1)
-	//		{
-	//			_velocity.y -= 3;
-	//		}
-
-	//		if (HitWallY == true)
-	//		{
-	//			//縦壁にぶつかったら
-	//			StateCount = 3;
-	//		}
-	//		break;
-	//	case 3://方向決定
-	//		//変数にランダムな値を格納
-	//		rnd = GetRand(1);
-	//		StateCount = 4;
-	//		break;
-	//	case 4: //横移動
-	//		if (rnd == 0)
-	//		{
-	//			_velocity.x += 3;
-	//		}
-	//		else if (rnd == 1)
-	//		{
-	//			_velocity.x -= 3;
-	//		}
-
-	//		//縦壁にぶつかったら
-	//		if (HitWallX == true)
-	//		{
-	//			StateCount = 1;
-	//		}
-	//		break;
-
-	//default:
-	//	break;
-	//}
-#pragma endregion
+void Player::Hit(bool hitX, bool hitY)
+{
+	UpdatePosition(hitX, hitY);
 }
 
 //	解放
 void Player::Release()
 {
+	DeleteGraph(_grp);
 }
 
 void Player::UpdatePosition(bool hitX, bool hitY)
 {
 	//	X方向に衝突
 	if (hitX)
-	{
 		_velocity.x = 0;
-		HitWallX = true;
-	}
-	else HitWallX = false;
 
 	//	Y方向に衝突
 	if (hitY)
-	{
 		_velocity.y = 0;
-		HitWallY = true;
-	}
-	else HitWallY = false;
 
 	_position += _velocity;
 }

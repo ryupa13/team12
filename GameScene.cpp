@@ -3,48 +3,40 @@
 #include "GraphFactory.h"
 #include "SceneManager.h"
 #include "WindowInfo.h"
+#include "GameObjectManager.h"
+#include "Enemy.h"
+#include "SmallEnemy.h"
+#include "TileMap.h"
 
 void GameScene::Initialize()
 {
-	//タイトルの背景の画像読み込み
-	_gameImage = GraphFactory::Instance().LoadGraph("img\\pipo-battlebg001b.jpg");
-
-	_tileMap.Start();
-	_player.Start();
-	_enemy.Start();
-
+	GameObjectManager::Instance().Start();
+	GameObjectManager::Instance().Add(new Player());
+	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
+	GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
+	GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
 }
 
 void GameScene::Update()
 {
-	//タイトル画面を表示する
-	//DrawGraph(0, 0, _gameImage, FALSE);
+	//更新
+	GameObjectManager::Instance().Update();
 
-	_player.Update();
-	auto info = _tileMap.FindTileHitInfo(_player.Position(), _player.Size(), _player.Velocity());
-	_player.UpdatePosition(info._hitX, info._hitY);
+	//描画
+	TileMap::Instance().Render();
+	GameObjectManager::Instance().Render();
 
-	_enemy.Update();
-	auto Einfo = _tileMap.FindTileHitInfo(_enemy.Position(), _enemy.Size(), _enemy.Velocity());
-	_enemy.UpdatePosition(Einfo._hitX, Einfo._hitY);
+	//タイルマップとの当たり判定
+	GameObjectManager::Instance().TileMapCollision();
 
-	_tileMap.Render();
-	_player.Render();
-	_enemy.Render();
-
-	if (info._hitX == 1 || info._hitY == 1)
+	if (GameObjectManager::Instance().GetClearFlag())
 	{
-		if (info._no == 80)
-		{
-			//シーンをゲームシーンに切り替える
-			SceneManager::Instance().LoadScene("Clear");
-		}
+		SceneManager::Instance().LoadScene("Clear");
 	}
-
-#ifdef _DEBUG_
-	DrawFormatString(20, 50, GetColor(255, 255, 255), "HitX : %d HitY : %d No : %d ", info._hitX, info._hitY, info._no);
-#endif	
-
+	if (GameObjectManager::Instance().GetDeadFlag())
+	{
+		SceneManager::Instance().LoadScene("Gameover");
+	}
 
 	//キー入力を更新
 	//int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
@@ -59,5 +51,5 @@ void GameScene::Update()
 
 void GameScene::Release()
 {
-	GraphFactory::Instance().EraseGraph("img\\pipo-battlebg001b.jpg");
+
 }
