@@ -19,6 +19,7 @@ void Player::Start()
 	_kind = Kind::Player;
 	pDirection = PDirection::DOWN;
 	
+	
 
 }
 
@@ -36,6 +37,8 @@ void Player::Update()
 {
 	//	ˆÚ“®—Ê‚ðƒNƒŠƒA	
 	_velocity.Zero();
+	
+	
 
 	float speed = 3;
 	_velocity = Input::Velocity() * speed;
