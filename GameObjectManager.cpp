@@ -127,9 +127,6 @@ void GameObjectManager::Update()
 	HitToEnemys();
 	HitToSumis();
 
-	
-	RemoveDeadGameObjects();
-
 }
 
 //•`‰æ
