@@ -18,6 +18,8 @@ void GameScene::Initialize()
 	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
 	GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
 	GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
+	_gameImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+	_animFrameCount = 0;
 }
 
 void GameScene::Update()
@@ -29,9 +31,15 @@ void GameScene::Update()
 	TileMap::Instance().Render();
 	GameObjectManager::Instance().Render();
 	
+	_animFrameCount++;
+
+	auto sheetNo = _animFrameCount / AnimationSpeed;
+	_offset.x = (sheetNo % HorizonSheet) * 64;
+	_offset.y = ((sheetNo / HorizonSheet) % VerticalSheet) * 64;
+
 	for (int i = 1; i < GameObjectManager::Instance().GetBulletCnt() + 1; i++)
 	{
-		Renderer::Instance().DrawGraph(_gameImage, Vector2(WindowInfo::WindowWidth - i * 64, 0), Vector2(0, 0), Vector2(64, 64));
+		Renderer::Instance().DrawGraph(_gameImage, Vector2(WindowInfo::WindowWidth - i * 64, 0), Vector2(_offset.x, _offset.y), Vector2(64, 64));
 	}
 //タイルマップとの当たり判定
 	GameObjectManager::Instance().TileMapCollision();
