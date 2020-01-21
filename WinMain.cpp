@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager::Instance().AddScene("Gameover", new GameOverScene);
 
 	//Å‰‚ÌƒV[ƒ“‚ğ“o˜^
-	SceneManager::Instance().StartScene("Select");
+	SceneManager::Instance().StartScene("Title");
 
 	//Às
 	SceneManager::Instance().Update();

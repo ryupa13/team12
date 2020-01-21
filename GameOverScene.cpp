@@ -31,13 +31,11 @@ void GameOverScene::Update()
 		case 0: //リトライ
 			SceneManager::Instance().LoadScene("Game");
 			break;
-		case 1: //タイトル
-			SceneManager::Instance().LoadScene("Title");
+		case 1: //ステージ選択
+			SceneManager::Instance().LoadScene("Select");
 			break;
-		case 2: //ステージ選択
-			SceneManager::Instance().LoadScene("Select"); 
-			break;
-		default:
+		case 2: //タイトル
+			SceneManager::Instance().LoadScene("Title"); 
 			break;
 		}
 	}

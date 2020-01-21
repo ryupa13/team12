@@ -33,6 +33,11 @@ void GameScene::Initialize()
 		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 10, 64 * 9)));
 		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 15, 64)));
 		break;
+	case 3:
+		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
+		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
+		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
+		break;
 	default:
 		break;
 	}
@@ -56,11 +61,17 @@ void GameScene::Update()
 
 	if (GameObjectManager::Instance().GetClearFlag())
 	{
-		SceneManager::Instance().LoadScene("Clear");
+		if (TileMap::Instance().GetMapNumber() == 3)
+			SceneManager::Instance().LoadScene("Title");
+		else
+			SceneManager::Instance().LoadScene("Clear");
 	}
 	if (GameObjectManager::Instance().GetDeadFlag())
 	{
-		SceneManager::Instance().LoadScene("Gameover");
+		if (TileMap::Instance().GetMapNumber() == 3)
+			SceneManager::Instance().LoadScene("Title");
+		else
+			SceneManager::Instance().LoadScene("Gameover");
 	}
 
 }
