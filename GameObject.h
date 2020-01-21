@@ -43,6 +43,7 @@ public:
 			return true;
 		return false;
 	}
+
 	bool IsDying() const
 	{
 		if (_state == State::Dying)

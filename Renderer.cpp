@@ -52,4 +52,5 @@ void Renderer::DrawGraph(int DestX, int DestY, int SrcX, int SrcY, int Width, in
 		static_cast<int>(DestY), SrcX, SrcY,
 		static_cast<int>(Width),
 		static_cast<int>(Height), GraphHandle, TRUE, TRUE);
+
 }

@@ -32,6 +32,7 @@ public:
 	void Hit() override;
 	void Hit(GameObject *hitObject) override;
 	void Hit(bool hitX, bool hitY) override;
+<<<<<<< HEAD
 
 	//　
 	void UpdatePosition(bool hitX, bool hitY);
@@ -45,12 +46,18 @@ private:
 	const int HorizonSheet = 5;
 	const int VerticalSheet = 2;
 
+	//　
+	void UpdatePosition(bool hitX, bool hitY);
+	enum PDirection
+	{
+		DOWN, UP, RIGHT, LEFT,
+	};
+	PDirection pDirection;
 public:
 	//	画像ハンドル
 	int _grp;
 	int count;
 	int su;
-	
 	SumiShot _sumishot;
 	std::unordered_map<PDirection, Vector2>_maps{
 		{PDirection::DOWN,Vector2 (0,1)},
@@ -59,6 +66,8 @@ public:
 	{PDirection::RIGHT,Vector2(1,0)}
 	    
 	};
-	
-
+	int anime[8];
+	int AnimationCount;
+	int ImgIndex;
+	int animenum;
 };

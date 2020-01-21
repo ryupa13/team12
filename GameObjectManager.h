@@ -59,7 +59,6 @@ private:
 	//死亡オブジェクトの削除
 	void RemoveDeadGameObjects();
 
-	
 
 private:
 	std::list<GameObject*> _players; //プレイヤーリスト
@@ -71,4 +70,5 @@ private:
 	Collision _collision;
 	int bulletcnt;
 	int bulletcntlimit;
+
 };

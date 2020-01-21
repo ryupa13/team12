@@ -38,4 +38,5 @@ public:
 	void DrawGraph(int grp, Vector2 position, Vector2 graphPosition, Vector2 size);
 
 	void DrawGraph(int DestX, int DestY, int SrcX, int SrcY, int    Width, int    Height, int GraphHandle, int TransFlag, int ReverseXFlag = FALSE, int ReverseYFlag = FALSE);
+
 };

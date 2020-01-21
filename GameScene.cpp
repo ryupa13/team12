@@ -9,9 +9,10 @@
 #include "TileMap.h"
 #include"Renderer.h"
 
+
+
 void GameScene::Initialize()
 {
-	_gameImage = GraphFactory::Instance().LoadGraph("img\\pipo-charachip005.png");
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
 	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
@@ -32,8 +33,7 @@ void GameScene::Update()
 	{
 		Renderer::Instance().DrawGraph(_gameImage, Vector2(WindowInfo::WindowWidth - i * 64, 0), Vector2(0, 0), Vector2(64, 64));
 	}
-
-	//タイルマップとの当たり判定
+//タイルマップとの当たり判定
 	GameObjectManager::Instance().TileMapCollision();
 
 	if (GameObjectManager::Instance().GetClearFlag())
@@ -45,15 +45,6 @@ void GameScene::Update()
 		SceneManager::Instance().LoadScene("Gameover");
 	}
 
-	//キー入力を更新
-	//int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-
-	////スペースキーを押したらゲーム開始
-	//if (key & PAD_INPUT_10)
-	//{
-	//	//シーンをゲームシーンに切り替える
-	//	SceneManager::Instance().LoadScene("Clear");
-	//}
 }
 
 void GameScene::Release()
