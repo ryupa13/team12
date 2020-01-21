@@ -16,4 +16,7 @@ public:
 private:
 	//ƒ^ƒCƒgƒ‹‚Ì”wŒi‰æ‘œ
 	int _titleImage;
+
+	//SE
+	int _titleSE;
 };

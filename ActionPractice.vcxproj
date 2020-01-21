@@ -168,6 +168,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SmallEnemy.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StageSelectScene.cpp" />
     <ClCompile Include="Sumi.cpp" />
     <ClCompile Include="SumiShot.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SmallEnemy.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="StageSelectScene.h" />
     <ClInclude Include="Sumi.h" />
     <ClInclude Include="SumiShot.h" />
