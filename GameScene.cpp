@@ -14,9 +14,27 @@ void GameScene::Initialize()
 	_gameImage = GraphFactory::Instance().LoadGraph("img\\pipo-charachip005.png");
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
-	GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
-	GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
-	GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
+
+	switch (TileMap::Instance().GetMapNumber())
+	{
+	case 0:
+		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
+		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
+		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
+		break;
+	case 1:
+		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 6, 64 * 4)));
+		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 8, 64 * 8)));
+		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 10, 64 * 2)));
+		break;
+	case 2:
+		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 7, 64 * 4)));
+		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 10, 64 * 9)));
+		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 15, 64)));
+		break;
+	default:
+		break;
+	}
 }
 
 void GameScene::Update()
