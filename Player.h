@@ -32,7 +32,6 @@ public:
 	void Hit() override;
 	void Hit(GameObject *hitObject) override;
 	void Hit(bool hitX, bool hitY) override;
-<<<<<<< HEAD
 
 	//　
 	void UpdatePosition(bool hitX, bool hitY);
@@ -46,13 +45,7 @@ private:
 	const int HorizonSheet = 5;
 	const int VerticalSheet = 2;
 
-	//　
-	void UpdatePosition(bool hitX, bool hitY);
-	enum PDirection
-	{
-		DOWN, UP, RIGHT, LEFT,
-	};
-	PDirection pDirection;
+	
 public:
 	//	画像ハンドル
 	int _grp;

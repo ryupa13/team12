@@ -9,7 +9,7 @@
 void ClearScene::Initialize()
 {
 	//”wŒi‰æ‘œ
-	_clearImage = GraphFactory::Instance().LoadGraph("img\\clear.png");
+	_clearImage = GraphFactory::Instance().LoadGraph("img\\title.png");
 	
 	//˜g‰æ‘œ
 	_frameImage = GraphFactory::Instance().LoadGraph("img\\waku.png");

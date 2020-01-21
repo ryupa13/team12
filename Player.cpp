@@ -16,7 +16,7 @@ void Player::Start()
 	_velocity = Vector2(0, 0);
 	_state = State::Alive;
 	_kind = Kind::Player;
-	pDirection = PDirection::DOWN
+	pDirection = PDirection::DOWN;
 	anime[8] = { 0 };
 	count = 0;
 	ImgIndex = 0;
@@ -57,11 +57,7 @@ void Player::Update()
 			
 		}
 	}
-		if (count < 100)
-		{
-			_sumishot.Shot(_position,_maps[pDirection]);
-			count++;
-		}
+		
 	
 }
 
@@ -71,23 +67,13 @@ void Player::UpdateMotion()
 	if (velocity.y > 0.0f && (pDirection != PDirection::DOWN))
 	{
 		pDirection = PDirection::DOWN;
-	}
-	else if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
-	{
-		pDirection = PDirection::UP;
-	}
-	else if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
-	{
-		pDirection = PDirection::RIGHT;
-	}
-	else if (velocity.x < 0.0f&& (pDirection != PDirection::LEFT))
-	{
-		pDirection = PDirection::LEFT;
 		animenum = 2;
 	}
-	if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
+    if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
 	{
 		pDirection = PDirection::UP;
+		animenum = 3;
+
 	}
 	if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
 	{

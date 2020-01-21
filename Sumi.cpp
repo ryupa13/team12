@@ -28,11 +28,10 @@ Sumi::Sumi(Vector2 pos, float angle)
 
 void Sumi::Start()
 {
-<<<<<<< HEAD
 	_sumiImage = GraphFactory::Instance().LoadGraph("img\\player.png");
 	_bombImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
 
-	_desImage = GraphFactory::Instance().LoadGraph("img\\frame.png");
+	_desImage = GraphFactory::Instance().LoadGraph("img\\FoodFish.png");
 
 	_rectPosition = Vector2(0, 0);
 
@@ -122,10 +121,7 @@ void Sumi::Hit(GameObject * hitObject)
 	{
 		_state = State::Dying;
 	}
-	if ((*hitObject)._kind == (*hitObject).Enemy)
-	{
-		_state = State::Dead;
-	}
+	
 }
 
 void Sumi::UpdatePosition(bool hitX, bool hitY)
