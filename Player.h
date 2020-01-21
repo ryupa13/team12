@@ -40,6 +40,12 @@ public:
 		DOWN, UP, RIGHT, LEFT,
 	};
 	PDirection pDirection;
+private:
+	const int AnimationSpeed = 4;
+	const int HorizonSheet = 5;
+	const int VerticalSheet = 2;
+
+	
 public:
 	//	‰æ‘œƒnƒ“ƒhƒ‹
 	int _grp;
@@ -53,6 +59,8 @@ public:
 	{PDirection::RIGHT,Vector2(1,0)}
 	    
 	};
-	
-
+	int anime[8];
+	int AnimationCount;
+	int ImgIndex;
+	int animenum;
 };

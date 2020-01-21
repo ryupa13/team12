@@ -59,4 +59,9 @@ public:
 	Vector2 _length;
 	int _count;
 	Vector2 _inkPosition;
+
+	int anime[8];
+	int count;
+	int ImgIndex;
+	int animenum;
 };

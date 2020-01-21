@@ -67,7 +67,6 @@ void GameObjectManager::Start()
 		continue;
 		++s;
 	}
-
 	bulletcnt = 0;
 	bulletcntlimit = 5;
 }
@@ -122,7 +121,6 @@ void GameObjectManager::Update()
 		s->Update();
 	}
 	bulletcnt = bulletcntlimit - _sumis.size();
-
 	HitToCharacters();
 	HitToEnemys();
 	HitToSumis();
@@ -144,7 +142,7 @@ void GameObjectManager::Render()
 	{
 		s->Render();
 	}
-    
+
 }
 
 //’Ç‰Á
@@ -329,6 +327,7 @@ void GameObjectManager::RemoveDeadGameObjects()
 }
 
 
+
 void GameObjectManager::TileMapCollision()
 {
 	for (auto p : _players)
@@ -400,6 +399,7 @@ bool GameObjectManager::GetClearFlag()
 }
 
 
+
 int GameObjectManager::GetBulletCnt()
 {
 	return bulletcnt;
@@ -445,5 +445,7 @@ Vector2 GameObjectManager::SearchSumis(Vector2 pos, float searchRad)
 	}
 
 	return distanceBPosition;
+
 }
+
 

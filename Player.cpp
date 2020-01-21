@@ -4,11 +4,10 @@
 #include "Renderer.h"
 #include "Input.h"
 #include"GameObjectManager.h"
-
 //	初期化処理
 void Player::Start()
 {
-	_grp = GraphFactory::Instance().LoadGraph("img\\player.png");
+	_grp = LoadDivGraph("img\\player.png", 8, 2, 4, 64, 64, anime);
 	_rectSize = Vector2(64, 64);
 	_size = Vector2(58, 58);
 	_radius = 16;
@@ -18,15 +17,21 @@ void Player::Start()
 	_state = State::Alive;
 	_kind = Kind::Player;
 	pDirection = PDirection::DOWN;
-	
-
+	anime[8] = { 0 };
+	count = 0;
+	ImgIndex = 0;
+	animenum = 0;
 }
 
 //	描画
 void Player::Render()
 {
-	//	プレイヤーを描画
-	Renderer::Instance().DrawGraph(_grp, _position, _rectPosition, _rectSize);
+	ImgIndex = count % 20;
+	ImgIndex /= 10;
+	count += 1;
+
+	DrawGraph(_position.x, _position.y, anime[ImgIndex + (2 * animenum)], TRUE);
+
 	_sumishot.Render();
 }
 
@@ -36,7 +41,6 @@ void Player::Update()
 {
 	//	移動量をクリア	
 	_velocity.Zero();
-
 	float speed = 3;
 	_velocity = Input::Velocity() * speed;
 	UpdateMotion();
@@ -53,7 +57,7 @@ void Player::Update()
 			
 		}
 	}
-
+		
 	
 }
 
@@ -63,18 +67,23 @@ void Player::UpdateMotion()
 	if (velocity.y > 0.0f && (pDirection != PDirection::DOWN))
 	{
 		pDirection = PDirection::DOWN;
+		animenum = 2;
 	}
-	else if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
+    if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
 	{
 		pDirection = PDirection::UP;
+		animenum = 3;
+
 	}
-	else if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
+	if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
 	{
 		pDirection = PDirection::RIGHT;
+		animenum = 0;
 	}
-	else if (velocity.x < 0.0f&& (pDirection != PDirection::LEFT))
+	if (velocity.x < 0.0f&& (pDirection != PDirection::LEFT))
 	{
 		pDirection = PDirection::LEFT;
+		animenum = 1;
 	}
 }
 
@@ -104,6 +113,7 @@ void Player::Hit(bool hitX, bool hitY)
 //	解放
 void Player::Release()
 {
+	DeleteGraph(_grp);
 }
 
 void Player::UpdatePosition(bool hitX, bool hitY)

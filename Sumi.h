@@ -31,8 +31,8 @@ public:
 
 private:
 	const int AnimationSpeed = 4;
-	const int HorizonSheet = 5;
-	const int VerticalSheet = 4;
+	const int HorizonSheet = 1;
+	const int VerticalSheet = 2;
 
 	Vector2 _offset;
 	Vector2 _velocity;
