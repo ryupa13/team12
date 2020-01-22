@@ -42,4 +42,5 @@ private:
 	int _animFrameCount;
 	int count;
 	int descount;
+	int sumicount;
 };

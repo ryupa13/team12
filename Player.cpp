@@ -47,14 +47,10 @@ void Player::Update()
 
 	if (Input::GetKeyTrigger(KEY_INPUT_Z))
 	{
-		if (_velocity.Magnitude() <= 0)
-		{
-			_velocity = _maps[pDirection];
-		}
+		
 		if ( GameObjectManager::Instance().GetBulletCnt() >0)
 		{
 			_sumishot.Shot(_position,_maps[pDirection]);
-			
 		}
 	}
 		

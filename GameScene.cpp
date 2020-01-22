@@ -8,17 +8,19 @@
 #include "SmallEnemy.h"
 #include "TileMap.h"
 #include"Renderer.h"
+#include"Sound.h"
 
 
 
 void GameScene::Initialize()
-{
+{	
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
 
 	_gameImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
 	_animFrameCount = 0;
-
+	//BGMçƒê∂
+	Sound::Instance().PlayBGM("sound\\bgm\\title.mp3", DX_PLAYTYPE_LOOP);
 
 	switch (TileMap::Instance().GetMapNumber())
 	{
@@ -45,7 +47,7 @@ void GameScene::Initialize()
 	default:
 		break;
 	}
-
+	//count = 0;
 }
 
 void GameScene::Update()
@@ -89,5 +91,5 @@ void GameScene::Update()
 
 void GameScene::Release()
 {
-
+	Sound::Instance().StopBGM();
 }
