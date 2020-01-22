@@ -51,6 +51,6 @@ void Renderer::DrawGraph(int DestX, int DestY, int SrcX, int SrcY, int Width, in
 	DxLib::DrawRectGraph(static_cast<int>(DestX),
 		static_cast<int>(DestY), SrcX, SrcY,
 		static_cast<int>(Width),
-		static_cast<int>(Height), GraphHandle, TRUE, TRUE);
+		static_cast<int>(Height), GraphHandle, TRUE,TRUE, TRUE);
 
 }

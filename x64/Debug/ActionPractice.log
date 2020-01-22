@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 ﻿  GameScene.cpp
 c:\team\gamescene.cpp(57): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   ActionPractice.vcxproj -> C:\team\x64\Debug\ActionPractice.exe
+=======
+﻿  Player.cpp
+c:\users\kpc-018a1702\desktop\12月・１月\12.1\player.cpp(33): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  ActionPractice.vcxproj -> C:\Users\KPC-018A1702\Desktop\12月・１月\12.1\x64\Debug\ActionPractice.exe
+>>>>>>> a073f626a5355b24da0c3e038f83631e98142657

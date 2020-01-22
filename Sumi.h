@@ -30,9 +30,9 @@ public:
 	void UpdatePosition(bool hitX, bool hitY);
 
 private:
-	const int AnimationSpeed = 4;
-	const int HorizonSheet = 1;
-	const int VerticalSheet = 2;
+	const int AnimationSpeed = 12;
+	const int HorizonSheet = 6;
+	const int VerticalSheet = 1;
 
 	Vector2 _offset;
 	Vector2 _velocity;
@@ -42,4 +42,5 @@ private:
 	int _animFrameCount;
 	int count;
 	int descount;
+	int sumicount;
 };

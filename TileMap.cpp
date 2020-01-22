@@ -18,7 +18,7 @@ void TileMap::Start(const std::string& str, int mapNumber)
 	_mapNumber = mapNumber;
 
 	//画像の読み込み
-	_mapgrp = GraphFactory::Instance().LoadGraph("img\\maptipsample.png");
+	_mapgrp = GraphFactory::Instance().LoadGraph("img\\StageBlock.png");
 
 #pragma region 配列のマップ
 	////タイルマップの情報を作成

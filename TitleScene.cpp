@@ -38,7 +38,7 @@ void TitleScene::Update()
 			SceneManager::Instance().LoadScene("Select");
 			break;
 		case 1: //チュートリアル
-			TileMap::Instance().Start("stage\\stage01.csv", 3);
+			TileMap::Instance().Start("stage\\Tutorial.csv", 3);
 			SceneManager::Instance().LoadScene("Game");
 			break;
 		}

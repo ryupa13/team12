@@ -8,13 +8,19 @@
 #include "SmallEnemy.h"
 #include "TileMap.h"
 #include"Renderer.h"
+#include"Sound.h"
 
 
 
 void GameScene::Initialize()
-{
+{	
 	GameObjectManager::Instance().Start();
 	GameObjectManager::Instance().Add(new Player());
+
+	_gameImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+	_animFrameCount = 0;
+	//BGM再生
+	Sound::Instance().PlayBGM("sound\\bgm\\title.mp3", DX_PLAYTYPE_LOOP);
 
 	switch (TileMap::Instance().GetMapNumber())
 	{
@@ -41,6 +47,7 @@ void GameScene::Initialize()
 	default:
 		break;
 	}
+	//count = 0;
 }
 
 void GameScene::Update()
@@ -52,9 +59,15 @@ void GameScene::Update()
 	TileMap::Instance().Render();
 	GameObjectManager::Instance().Render();
 	
+	_animFrameCount++;
+
+	auto sheetNo = _animFrameCount / AnimationSpeed;
+	_offset.x = (sheetNo % HorizonSheet) * 64;
+	_offset.y = ((sheetNo / HorizonSheet) % VerticalSheet) * 64;
+
 	for (int i = 1; i < GameObjectManager::Instance().GetBulletCnt() + 1; i++)
 	{
-		Renderer::Instance().DrawGraph(_gameImage, Vector2(WindowInfo::WindowWidth - i * 64, 0), Vector2(0, 0), Vector2(64, 64));
+		Renderer::Instance().DrawGraph(_gameImage, Vector2(WindowInfo::WindowWidth - i * 64, 0), Vector2(_offset.x, _offset.y), Vector2(64, 64));
 	}
 //タイルマップとの当たり判定
 	GameObjectManager::Instance().TileMapCollision();
@@ -78,5 +91,5 @@ void GameScene::Update()
 
 void GameScene::Release()
 {
-
+	Sound::Instance().StopBGM();
 }
