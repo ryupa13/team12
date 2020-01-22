@@ -15,9 +15,10 @@ void Enemy::Start()
 	_state = State::Alive;
 	_kind = Kind::Enemy;
 	_search = SearchState::Free;
-	_searchPlayerRadius = 64 * 2 + 32;
-	_searchInkRadius = 64 * 4 + 32;
+	_searchPlayerRadius = 64 * 4 + 32;
+	_searchInkRadius = 64 * 6 + 32;
 	_stateCount = 0;
+	_chaseCount = 0;
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;

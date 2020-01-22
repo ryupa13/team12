@@ -14,13 +14,13 @@ void SmallEnemy::Start()
 	_state = State::Alive;
 	_kind = Kind::SmallEnemy;
 	_search = SearchState::Free;
-	_searchPlayerRadius = 3 * 64;
+	_searchPlayerRadius = 4 * 64 + 32;
 	_stateCount = 0;
 	_chaseCount = 0;
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;
-	_inkCount = 100;
+	_inkCount = 50;
 	anime[8] = { 0 };
 	count = 0;
 	ImgIndex = 0;
@@ -84,7 +84,7 @@ void SmallEnemy::Hit(GameObject *hitObject)
 	}
 	if ((*hitObject)._kind == (*hitObject).Sumi)
 	{
-		if (_inkCount < 100)
+		if (_inkCount < 30)
 			return;
 
 		switch (_stateCount)
