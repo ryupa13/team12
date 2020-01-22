@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Renderer.h"
 #include "WindowInfo.h"
+#include"Sound.h"
 
 void ClearScene::Initialize()
 {
@@ -13,6 +14,10 @@ void ClearScene::Initialize()
 	
 	//枠画像
 	_frameImage = GraphFactory::Instance().LoadGraph("img\\waku.png");
+	//BGM再生
+	Sound::Instance().PlayBGM("sound\\bgm\\clear2.mp3", DX_PLAYTYPE_LOOP);
+	clearSE = Sound::Instance().LoadSE("sound\\se\\sentaku.wav");
+	_crrl = Sound::Instance().LoadSE("sound\\se\\test.wav");
 	//カーソル番号
 	_cursorNumber = 0;
 }
@@ -43,11 +48,14 @@ void ClearScene::Update()
 		default:
 			break;
 		}
+		Sound::Instance().PlaySE(clearSE, DX_PLAYTYPE_BACK);
+		Sound::Instance().StopBGM();
 	}
 
 	//カーソルの移動
 	if (Input::GetKeyTrigger(KEY_INPUT_RIGHT))
 	{
+		Sound::Instance().PlaySE(_crrl, DX_PLAYTYPE_BACK);
 		_cursorNumber += 1;
 
 		if (_cursorNumber > 1)
@@ -56,6 +64,7 @@ void ClearScene::Update()
 
 	if (Input::GetKeyTrigger(KEY_INPUT_LEFT))
 	{
+		Sound::Instance().PlaySE(_crrl, DX_PLAYTYPE_BACK);
 		_cursorNumber -= 1;
 
 		if (_cursorNumber < 0)

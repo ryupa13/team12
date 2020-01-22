@@ -25,4 +25,5 @@ private:
 	int _animFrameCount;
 	Vector2 _offset;
 	Vector2 _velocity;
+	int count;
 };

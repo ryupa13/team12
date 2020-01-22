@@ -1,8 +1,13 @@
 【BGM】
 ・TitleBGM(Dear Childhood Friend / H/MIX GALLERY)
+・TitleBGM(お昼ですよ /DOVA-SYNDROME)
 ・GameSceneBGM(海の揺りかご / H/MIX GALLERY)
+・GameSceneBGM(どかない猫 / DOVA-SYNDROME)
 ・GameClearBGM(空が海に落ちた話 / M-ART)
-・GameOverBGM( / )
+・GameClearBGM(Good＿Run / DOVA-SYNDROME)
+・GameOverBGM( 残念/ DOVA-SYNDROME)
 
 【SE】
-・
+・_bombSE(se_maoudamashii_explosion06/魔王魂)
+・_playerSE(se_maoudamashii_explosion06/魔王魂)
+・_sentakuSE(水に飛び込む/DOVA-SYNDROME)

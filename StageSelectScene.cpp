@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "WindowInfo.h"
 #include "TileMap.h"
+#include"Sound.h"
 
 void StageSelectScene::Initialize()
 {
@@ -13,6 +14,12 @@ void StageSelectScene::Initialize()
 	_selectImage = GraphFactory::Instance().LoadGraph("img\\select.png");
 	//枠画像
 	_frameImage = GraphFactory::Instance().LoadGraph("img\\selectplayer.png");
+	//BGM再生
+	Sound::Instance().PlayBGM("sound\\bgm\\title2.mp3", DX_PLAYTYPE_LOOP);
+
+	_gamesceneSE = Sound::Instance().LoadSE("sound\\se\\sentaku.wav");
+	_gameEXsceneSE = Sound::Instance().LoadSE("sound\\se\\yaro.wav");
+	_crr = Sound::Instance().LoadSE("sound\\se\\test.wav");
 
 	//カーソルを合わせているステージ番号
 	_stageNumber = 0;
@@ -44,16 +51,28 @@ void StageSelectScene::Update()
 		case 2:
 			TileMap::Instance().Start("stage\\stage03.csv", 2);
 			break;
+		case 3:
+			TileMap::Instance().Start("stage\\stage04.csv", 3);
+			break;
 		default:
 			break;
 		}
 
 		//シーンをゲームシーンに切り替える
 		SceneManager::Instance().LoadScene("Game");
+		Sound::Instance().PlaySE(_gamesceneSE, DX_PLAYTYPE_BACK);
+		Sound::Instance().StopBGM();
+	}
+
+	if (Input::GetKeyTrigger(KEY_INPUT_H))
+	{
+		Sound::Instance().PlaySE(_gameEXsceneSE, DX_PLAYTYPE_BACK);
+		_stageNumber = 3;
 	}
 
 	if (Input::GetKeyTrigger(KEY_INPUT_DOWN))
 	{
+		Sound::Instance().PlaySE(_crr, DX_PLAYTYPE_BACK);
 		_stageNumber += 1;
 
 		if (_stageNumber > _stageNumberLimit)
@@ -61,6 +80,7 @@ void StageSelectScene::Update()
 	}
 	if (Input::GetKeyTrigger(KEY_INPUT_UP))
 	{
+		Sound::Instance().PlaySE(_crr, DX_PLAYTYPE_BACK);
 		_stageNumber -= 1;
 
 		if (_stageNumber < 0)

@@ -63,4 +63,5 @@ public:
 	int AnimationCount;
 	int ImgIndex;
 	int animenum;
+	int _playerSE;
 };

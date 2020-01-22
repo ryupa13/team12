@@ -20,7 +20,7 @@ void GameScene::Initialize()
 	_gameImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
 	_animFrameCount = 0;
 	//BGMçƒê∂
-	Sound::Instance().PlayBGM("sound\\bgm\\title.mp3", DX_PLAYTYPE_LOOP);
+	Sound::Instance().PlayBGM("sound\\bgm\\game2.mp3", DX_PLAYTYPE_LOOP);
 
 	switch (TileMap::Instance().GetMapNumber())
 	{
@@ -28,16 +28,19 @@ void GameScene::Initialize()
 		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));
 		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 9, 64 * 9)));
 		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 11, 64)));
+		Sound::Instance().PlayBGM("sound\\bgm\\game2.mp3", DX_PLAYTYPE_LOOP);
 		break;
 	case 1:
 		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 6, 64 * 4)));
 		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 8, 64 * 8)));
 		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 10, 64 * 2)));
+		Sound::Instance().PlayBGM("sound\\bgm\\game.mp3", DX_PLAYTYPE_LOOP);
 		break;
 	case 2:
 		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 7, 64 * 4)));
 		GameObjectManager::Instance().Add(new Enemy(1, Vector2(64 * 10, 64 * 9)));
 		GameObjectManager::Instance().Add(new SmallEnemy(2, Vector2(64 * 15, 64)));
+		Sound::Instance().PlayBGM("sound\\bgm\\title.mp3", DX_PLAYTYPE_LOOP);
 		break;
 	case 3:
 		GameObjectManager::Instance().Add(new Enemy(0, Vector2(64 * 5, 64 * 4)));

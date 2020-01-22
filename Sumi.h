@@ -43,4 +43,6 @@ private:
 	int count;
 	int descount;
 	int sumicount;
+	int _sumiSE;
+	int _bombSE;
 };

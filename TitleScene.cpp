@@ -16,9 +16,10 @@ void TitleScene::Initialize()
 	//枠画像
 	_frameImage = GraphFactory::Instance().LoadGraph("img\\waku.png");
 	//SE読み込み
-	_titleSE = Sound::Instance().LoadSE("sound\\se\\test.wav");
+	_titleSE = Sound::Instance().LoadSE("sound\\se\\sentaku.wav");
+	_cursorSE = Sound::Instance().LoadSE("sound\\se\\test.wav");
 	//BGM再生
-	Sound::Instance().PlayBGM("sound\\bgm\\title.mp3", DX_PLAYTYPE_LOOP);
+	Sound::Instance().PlayBGM("sound\\bgm\\title2.mp3", DX_PLAYTYPE_LOOP);
 	//カーソル番号
 	_cursorNumber = 0;
 }
@@ -49,6 +50,7 @@ void TitleScene::Update()
 	//カーソルの移動
 	if (Input::GetKeyTrigger(KEY_INPUT_DOWN))
 	{
+		Sound::Instance().PlaySE(_cursorSE, DX_PLAYTYPE_BACK);
 		_cursorNumber += 1;
 
 		if (_cursorNumber > 1)
@@ -56,6 +58,7 @@ void TitleScene::Update()
 	}
 	if (Input::GetKeyTrigger(KEY_INPUT_UP))
 	{
+		Sound::Instance().PlaySE(_cursorSE, DX_PLAYTYPE_BACK);
 		_cursorNumber -= 1;
 
 		if (_cursorNumber < 0)
