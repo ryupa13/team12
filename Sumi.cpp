@@ -4,7 +4,7 @@
 #include<cmath>
 #include"Renderer.h"
 #include"Input.h"
-
+#include"Sound.h"
 
 
 Sumi::Sumi(Vector2 pos,Vector2 velocity)
@@ -28,13 +28,23 @@ Sumi::Sumi(Vector2 pos, float angle)
 
 void Sumi::Start()
 {
-	_sumiImage = GraphFactory::Instance().LoadGraph("img\\tama.png");
-	_bombImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+	_sumiImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
+	_bombImage = GraphFactory::Instance().LoadGraph("img\\bom.png");
+	_desImage = GraphFactory::Instance().LoadGraph("img\\bakuhatu.png");
+	//SEì«Ç›çûÇ›
+	_sumiSE = Sound::Instance().LoadSE("sound\\se\\test.wav");
+	_bombSE = Sound::Instance().LoadSE("sound\\se\\bomb.wav");
+
 	_rectPosition = Vector2(0, 0);
+
 	_animFrameCount = 0;
 	_radius = 32;
 	_state = State::Alive;
 	_kind = Kind::Sumi;
+	count = 0;
+	descount = 0;
+	sumicount = 0;
+
 }
 
 void Sumi::Render()
@@ -42,11 +52,27 @@ void Sumi::Render()
 	if (_state == State::Alive)
 	{
 		//	ÉvÉåÉCÉÑÅ[Çï`âÊ
-		Renderer::Instance().DrawGraph(_sumiImage, _position, _rectPosition, _size);
+
+		Renderer::Instance().DrawGraph(static_cast<int>(_position.x),
+			static_cast<int>(_position.y),_offset.x,_offset.y,
+			static_cast<int>(_size.x),
+			static_cast<int>(_size.y),_sumiImage,TRUE,TRUE,TRUE);
+
 	}
 	if (_state == State::Bomb)
 	{
-		Renderer::Instance().DrawGraph(_bombImage, _position, _rectPosition, _size);
+		Renderer::Instance().DrawGraph(static_cast<int>(_position.x),
+			static_cast<int>(_position.y), _offset.x, _offset.y,
+			static_cast<int>(_size.x),
+			static_cast<int>(_size.y), _bombImage, TRUE, TRUE, TRUE);
+	}
+
+	if (_state == State::Dying)
+	{
+		Renderer::Instance().DrawGraph(static_cast<int>(_position.x),
+			static_cast<int>(_position.y), _offset.x, _offset.y,
+			static_cast<int>(_size.x),
+			static_cast<int>(_size.y), _desImage, TRUE, TRUE, TRUE);
 	}
 }
 
@@ -58,6 +84,21 @@ void Sumi::Update()
 	_offset.x = (sheetNo % HorizonSheet) * _size.x;
 	_offset.y = ((sheetNo / HorizonSheet) % VerticalSheet) * _size.y;
 	
+	
+
+	if (_state == State::Dying)
+	{
+		descount++;
+		if (descount == 10)
+		{
+			descount = 0;
+			_state = State::Dead;
+			
+		}
+	}
+
+	
+
 	//_position += _velocity;
 }
 
@@ -86,10 +127,12 @@ void Sumi::Hit(GameObject * hitObject)
 	{
 		_state = State::Bomb;
 	}
-	if ((*hitObject)._kind == (*hitObject).Enemy)
+	if ((*hitObject)._kind == (*hitObject).Enemy || (*hitObject)._state == State::Bomb && (*hitObject)._kind == (*hitObject).Enemy)
 	{
-		_state = State::Dead;
+		_state = State::Dying;
+		Sound::Instance().PlaySE(_bombSE, DX_PLAYTYPE_BACK);
 	}
+	
 }
 
 void Sumi::UpdatePosition(bool hitX, bool hitY)

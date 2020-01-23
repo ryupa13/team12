@@ -3,7 +3,8 @@
 #include "GraphFactory.h"
 #include "Renderer.h"
 #include "Input.h"
-
+#include"GameObjectManager.h"
+#include"Sound.h"
 //	‰Šú‰»ˆ—
 void Player::Start()
 {
@@ -17,11 +18,12 @@ void Player::Start()
 	_state = State::Alive;
 	_kind = Kind::Player;
 	pDirection = PDirection::DOWN;
-	
 	anime[8] = { 0 };
 	count = 0;
 	ImgIndex = 0;
 	animenum = 0;
+	//SE“Ç‚İ‚İ
+	_playerSE = Sound::Instance().LoadSE("sound\\se\\sumi.wav");
 }
 
 //	•`‰æ
@@ -32,6 +34,7 @@ void Player::Render()
 	count += 1;
 
 	DrawGraph(_position.x, _position.y, anime[ImgIndex + (2 * animenum)], TRUE);
+
 	_sumishot.Render();
 }
 
@@ -41,23 +44,21 @@ void Player::Update()
 {
 	//	ˆÚ“®—Ê‚ğƒNƒŠƒA	
 	_velocity.Zero();
-
 	float speed = 3;
 	_velocity = Input::Velocity() * speed;
 	UpdateMotion();
 
 	if (Input::GetKeyTrigger(KEY_INPUT_Z))
 	{
-		if (_velocity.Magnitude() <= 0)
-		{
-			_velocity = _maps[pDirection];
-		}
-		if (count < 100)
+		
+		if ( GameObjectManager::Instance().GetBulletCnt() >0)
 		{
 			_sumishot.Shot(_position,_maps[pDirection]);
-			count++;
+			Sound::Instance().PlaySE(_playerSE, DX_PLAYTYPE_BACK);
 		}
 	}
+		
+	
 }
 
 void Player::UpdateMotion()
@@ -68,10 +69,11 @@ void Player::UpdateMotion()
 		pDirection = PDirection::DOWN;
 		animenum = 2;
 	}
-	if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
+    if((velocity.y<0.0f)&& (pDirection != PDirection::UP))
 	{
 		pDirection = PDirection::UP;
 		animenum = 3;
+
 	}
 	if (velocity.x > 0.0f && (pDirection != PDirection::RIGHT))
 	{

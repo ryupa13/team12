@@ -45,3 +45,12 @@ void Renderer::DrawGraph(int grp, Vector2 position, Vector2 graphPosition, Vecto
 		static_cast<int>(graphPosition.y),
 		size.x, size.y, grp, TRUE);
 }
+
+void Renderer::DrawGraph(int DestX, int DestY, int SrcX, int SrcY, int Width, int Height, int GraphHandle, int TransFlag, int ReverseXFlag, int ReverseYFlag)
+{
+	DxLib::DrawRectGraph(static_cast<int>(DestX),
+		static_cast<int>(DestY), SrcX, SrcY,
+		static_cast<int>(Width),
+		static_cast<int>(Height), GraphHandle, TRUE,TRUE, TRUE);
+
+}

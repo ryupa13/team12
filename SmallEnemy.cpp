@@ -14,14 +14,13 @@ void SmallEnemy::Start()
 	_state = State::Alive;
 	_kind = Kind::SmallEnemy;
 	_search = SearchState::Free;
-	_searchPlayerRadius = 3 * 64;
+	_searchPlayerRadius = 4 * 64 + 32;
 	_stateCount = 0;
 	_chaseCount = 0;
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;
-	_inkCount = 100;
-
+	_inkCount = 50;
 	anime[8] = { 0 };
 	count = 0;
 	ImgIndex = 0;
@@ -37,6 +36,7 @@ void SmallEnemy::Render()
 	count += 1;
 
 	DrawGraph(_position.x, _position.y, anime[ImgIndex + (2 * animenum)], TRUE);
+
 }
 
 //çXêV
@@ -50,19 +50,19 @@ void SmallEnemy::Update()
 		if (_playerPosition.y - _position.y <= _searchPlayerRadius && _playerPosition.y - _position.y >= -_searchPlayerRadius)
 		{
 			_search = SearchState::Chase;
-			_speed = 3;
+			_speed = 5;
 		}
 		else
 		{
 			_search = SearchState::Free;
-			_speed = 2;
+			_speed = 3;
 			_chaseCount = 0;
 		}
 	}
 	else
 	{
 		_search = SearchState::Free;
-		_speed = 2;
+		_speed = 3;
 		_chaseCount = 0;
 	}
 
@@ -84,7 +84,7 @@ void SmallEnemy::Hit(GameObject *hitObject)
 	}
 	if ((*hitObject)._kind == (*hitObject).Sumi)
 	{
-		if (_inkCount < 100)
+		if (_inkCount < 30)
 			return;
 
 		switch (_stateCount)
@@ -275,6 +275,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 3;
 			break;
 		case 3: //ç∂
@@ -331,6 +332,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 0;
 			break;
 		case 4: //âE
@@ -388,6 +390,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 1;
 		default:
 			break;
@@ -414,6 +417,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 2;
 			if (_hitWallY)
 			{
@@ -433,6 +437,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 3;
 			if (_hitWallY)
 			{
@@ -452,6 +457,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 0;
 			if (_hitWallX)
 			{
@@ -471,6 +477,7 @@ void SmallEnemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 1;
 			if (_hitWallX)
 			{

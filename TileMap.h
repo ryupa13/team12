@@ -27,12 +27,15 @@ public:
 	//インスタンスの取得
 	static TileMap& Instance();
 	
-	void Start(const std::string& str);
+	void Start(const std::string& str, int mapNumber);
 
 	void Render();
 
 	TileHitInfo FindTileHitInfo(const Vector2& pos,
 		const Vector2& size, const Vector2& velocity);
+
+	int GetMapNumber();
+
 private:
 	int TileCollision(const Vector2& pos, const Vector2& size, const Vector2& velocity);
 
@@ -43,4 +46,6 @@ private:
 	int _mapgrp;
 
 	int _tilesize;
+
+	int _mapNumber;
 };

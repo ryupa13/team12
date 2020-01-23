@@ -56,8 +56,6 @@ public:
 	float _speed;
 	Vector2 _length;
 	int _inkCount;
-
-
 	int anime[8];
 	int count;
 	int ImgIndex;

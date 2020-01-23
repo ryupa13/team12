@@ -7,6 +7,7 @@
 void Enemy::Start()
 {
 	_grp = LoadDivGraph("img\\Enemy.png", 8, 2, 4, 64, 64, anime);
+
 	_size = Vector2(63, 63);
 	_rectPosition = Vector2(0, 32);
 	_rectSize = Vector2(64, 64);
@@ -14,9 +15,10 @@ void Enemy::Start()
 	_state = State::Alive;
 	_kind = Kind::Enemy;
 	_search = SearchState::Free;
-	_searchPlayerRadius = 64 * 2 + 32;
-	_searchInkRadius = 64 * 4 + 32;
+	_searchPlayerRadius = 64 * 4 + 32;
+	_searchInkRadius = 64 * 6 + 32;
 	_stateCount = 0;
+	_chaseCount = 0;
 	_hitWallX = false;
 	_hitWallY = false;
 	_rnd = 1234;
@@ -32,11 +34,13 @@ void Enemy::Start()
 void Enemy::Render()
 {
 	//エネミーの描画
+	
 	ImgIndex = count % 20;
 	ImgIndex /= 10;
 	count += 1;
 
 	DrawGraph(_position.x, _position.y, anime[ImgIndex + (2 * animenum)], TRUE);
+
 }
 
 //更新
@@ -227,7 +231,9 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 2;
+
 			break;
 		case 2: //下
 			_velocity.y = 1;
@@ -283,7 +289,9 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 3;
+
 			break;
 		case 3: //左
 			_velocity.x = -1;
@@ -339,6 +347,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 0;
 			break;
 		case 4: //右
@@ -396,6 +405,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 1;
 		default:
 			break;
@@ -422,6 +432,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 2;
 			if (_hitWallY)
 			{
@@ -441,6 +452,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 3;
 			if (_hitWallY)
 			{
@@ -460,6 +472,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 0;
 			if (_hitWallX)
 			{
@@ -479,6 +492,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 1;
 			if (_hitWallX)
 			{
@@ -589,6 +603,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 2;
 			break;
 		case 2: //下
@@ -645,6 +660,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 3;
 			break;
 		case 3: //左
@@ -701,6 +717,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
+
 			animenum = 0;
 			break;
 		case 4: //右
@@ -758,7 +775,7 @@ void Enemy::UpdateVelocity()
 			if (_velocity.Magnitude() != 0)
 				_velocity = _velocity.Normalized();
 			_velocity = _velocity * _speed;
-			animenum = 1;
+           animenum = 1;
 		default:
 			break;
 		}

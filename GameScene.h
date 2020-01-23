@@ -19,4 +19,13 @@ private:
 	int _gameImage;
 	GameObject* _player;
 	GameObject* _sumi;
+	const int AnimationSpeed = 12;
+	const int HorizonSheet = 6;
+	const int VerticalSheet = 1;
+	int _animFrameCount;
+	Vector2 _offset;
+	Vector2 _velocity;
+	int count;
+
+	int _tutorialgrp;
 };

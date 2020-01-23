@@ -1,3 +1,5 @@
-﻿  Enemy.cpp
-c:\users\kpc-018a1434\downloads\team12-okuda\enemy.cpp(39): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  ActionPractice.vcxproj -> C:\Users\KPC-018A1434\Downloads\team12-okuda\x64\Debug\ActionPractice.exe
+﻿  GameScene.cpp
+c:\users\kpc-018a1434\downloads\team12-kawashita\gamescene.cpp(67): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\downloads\team12-kawashita\gamescene.cpp(68): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\downloads\team12-kawashita\gamescene.cpp(72): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  ActionPractice.vcxproj -> C:\Users\KPC-018A1434\Downloads\team12-kawashita\x64\Debug\ActionPractice.exe

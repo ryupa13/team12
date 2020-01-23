@@ -16,4 +16,12 @@ public:
 private:
 	//タイトルの背景画像
 	int _titleImage;
+	int _frameImage;
+
+	//SE
+	int _titleSE;
+	int _cursorSE;
+
+	//カーソル番号
+	int _cursorNumber;
 };

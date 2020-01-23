@@ -12,12 +12,13 @@ TileMap& TileMap::Instance()
 }
 
 //初期化
-void TileMap::Start(const std::string& str)
+void TileMap::Start(const std::string& str, int mapNumber)
 {
 	_map.clear();
+	_mapNumber = mapNumber;
 
 	//画像の読み込み
-	_mapgrp = GraphFactory::Instance().LoadGraph("img\\maptipsample.png");
+	_mapgrp = GraphFactory::Instance().LoadGraph("img\\StageBlock.png");
 
 #pragma region 配列のマップ
 	////タイルマップの情報を作成
@@ -192,4 +193,9 @@ std::vector<int> TileMap::Split(const std::string & str, char delim)
 		mapRow.push_back(std::atoi(tmp.c_str()));
 	}
 	return mapRow;
+}
+
+int TileMap::GetMapNumber()
+{
+	return _mapNumber;
 }

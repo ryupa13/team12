@@ -1,0 +1,17 @@
+diff a/ActionPractice.vcxproj b/ActionPractice.vcxproj	(rejected hunks)
+@@ -105,13 +105,13 @@
+       <SDLCheck>true</SDLCheck>
+       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <ConformanceMode>true</ConformanceMode>
+-      <AdditionalIncludeDirectories>C:\Users\KPC-018A1702\Desktop\12月・１月\12.1\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>D:\!K018A1402\2年\前期\C++\DirectX\DxLib\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+     </ClCompile>
+     <Link>
+       <GenerateDebugInformation>true</GenerateDebugInformation>
+       <SubSystem>Windows</SubSystem>
+-      <AdditionalLibraryDirectories>C:\Users\KPC-018A1702\Desktop\12月・１月\12.1\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
++      <AdditionalLibraryDirectories>D:\!K018A1402\2年\前期\C++\DirectX\DxLib\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+     </Link>
+   </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

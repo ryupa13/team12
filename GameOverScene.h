@@ -22,4 +22,7 @@ private:
 
 	//ƒJ[ƒ\ƒ‹”Ô†
 	int _cursorNumber;
+
+	int _gameoverSE;
+	int _cl;
 };

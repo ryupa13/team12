@@ -44,6 +44,13 @@ public:
 		return false;
 	}
 
+	bool IsDying() const
+	{
+		if (_state == State::Dying)
+			return true;
+		return false;
+	}
+
 public:
 	Vector2 _position;		//	座標
 	Vector2 _size;			//	サイズ
@@ -56,7 +63,8 @@ public:
 		Alive, //生存
 		Dead,  //死亡
 		Clear,//クリア
-		Bomb
+		Bomb,//墨
+		Dying,//死に際
 	};
 	State _state;
 	enum Kind
