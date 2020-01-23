@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Renderer.h"
 #include "WindowInfo.h"
+#include"Sound.h"
 
 void GameOverScene::Initialize()
 {
@@ -12,7 +13,10 @@ void GameOverScene::Initialize()
 	_gameoverImage = GraphFactory::Instance().LoadGraph("img\\overkari.png");
 	//枠画像
 	_frameImage = GraphFactory::Instance().LoadGraph("img\\waku.png");
-
+	//BGM再生
+	Sound::Instance().PlayBGM("sound\\bgm\\gameover.mp3", DX_PLAYTYPE_LOOP);
+	_gameoverSE = Sound::Instance().LoadSE("sound\\se\\sentaku.wav");
+	_cl = Sound::Instance().LoadSE("sound\\se\\test.wav");
 	//カーソル番号
 	_cursorNumber = 0;
 }
@@ -38,18 +42,21 @@ void GameOverScene::Update()
 			SceneManager::Instance().LoadScene("Title"); 
 			break;
 		}
+		Sound::Instance().PlaySE(_gameoverSE, DX_PLAYTYPE_BACK);
+		Sound::Instance().StopBGM();
 	}
 
 	//カーソルの移動
 	if (Input::GetKeyTrigger(KEY_INPUT_DOWN))
 	{
 		_cursorNumber += 1;
-
+		Sound::Instance().PlaySE(_cl, DX_PLAYTYPE_BACK);
 		if (_cursorNumber > 2)
 			_cursorNumber = 2;
 	}
 	if (Input::GetKeyTrigger(KEY_INPUT_UP))
 	{
+		Sound::Instance().PlaySE(_cl, DX_PLAYTYPE_BACK);
 		_cursorNumber -= 1;
 
 		if (_cursorNumber < 0)

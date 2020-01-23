@@ -25,4 +25,8 @@ private:
 
 	//ステージ番号上限
 	int _stageNumberLimit;
+
+	int _gamesceneSE;
+	int _gameEXsceneSE;
+	int _crr;
 };

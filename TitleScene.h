@@ -20,6 +20,7 @@ private:
 
 	//SE
 	int _titleSE;
+	int _cursorSE;
 
 	//ƒJ[ƒ\ƒ‹”Ô†
 	int _cursorNumber;

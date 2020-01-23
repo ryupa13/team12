@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Input.h"
 #include"GameObjectManager.h"
+#include"Sound.h"
 //	‰Šú‰»ˆ—
 void Player::Start()
 {
@@ -21,6 +22,8 @@ void Player::Start()
 	count = 0;
 	ImgIndex = 0;
 	animenum = 0;
+	//SE“Ç‚Ýž‚Ý
+	_playerSE = Sound::Instance().LoadSE("sound\\se\\sumi.wav");
 }
 
 //	•`‰æ
@@ -51,6 +54,7 @@ void Player::Update()
 		if ( GameObjectManager::Instance().GetBulletCnt() >0)
 		{
 			_sumishot.Shot(_position,_maps[pDirection]);
+			Sound::Instance().PlaySE(_playerSE, DX_PLAYTYPE_BACK);
 		}
 	}
 		

@@ -4,7 +4,7 @@
 #include<cmath>
 #include"Renderer.h"
 #include"Input.h"
-
+#include"Sound.h"
 
 
 Sumi::Sumi(Vector2 pos,Vector2 velocity)
@@ -30,8 +30,10 @@ void Sumi::Start()
 {
 	_sumiImage = GraphFactory::Instance().LoadGraph("img\\sumi.png");
 	_bombImage = GraphFactory::Instance().LoadGraph("img\\bom.png");
-
 	_desImage = GraphFactory::Instance().LoadGraph("img\\bakuhatu.png");
+	//SEì«Ç›çûÇ›
+	_sumiSE = Sound::Instance().LoadSE("sound\\se\\test.wav");
+	_bombSE = Sound::Instance().LoadSE("sound\\se\\bomb.wav");
 
 	_rectPosition = Vector2(0, 0);
 
@@ -82,10 +84,7 @@ void Sumi::Update()
 	_offset.x = (sheetNo % HorizonSheet) * _size.x;
 	_offset.y = ((sheetNo / HorizonSheet) % VerticalSheet) * _size.y;
 	
-	if (_state == State::Alive)
-	{
-		sumicount++;
-	}
+	
 
 	if (_state == State::Dying)
 	{
@@ -131,6 +130,7 @@ void Sumi::Hit(GameObject * hitObject)
 	if ((*hitObject)._kind == (*hitObject).Enemy || (*hitObject)._state == State::Bomb && (*hitObject)._kind == (*hitObject).Enemy)
 	{
 		_state = State::Dying;
+		Sound::Instance().PlaySE(_bombSE, DX_PLAYTYPE_BACK);
 	}
 	
 }
