@@ -26,4 +26,6 @@ private:
 	Vector2 _offset;
 	Vector2 _velocity;
 	int count;
+
+	int _tutorialgrp;
 };

@@ -50,19 +50,19 @@ void SmallEnemy::Update()
 		if (_playerPosition.y - _position.y <= _searchPlayerRadius && _playerPosition.y - _position.y >= -_searchPlayerRadius)
 		{
 			_search = SearchState::Chase;
-			_speed = 3;
+			_speed = 5;
 		}
 		else
 		{
 			_search = SearchState::Free;
-			_speed = 2;
+			_speed = 3;
 			_chaseCount = 0;
 		}
 	}
 	else
 	{
 		_search = SearchState::Free;
-		_speed = 2;
+		_speed = 3;
 		_chaseCount = 0;
 	}
 

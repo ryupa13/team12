@@ -52,6 +52,7 @@ void StageSelectScene::Update()
 			TileMap::Instance().Start("stage\\stage03.csv", 2);
 			break;
 		case 3:
+
 			TileMap::Instance().Start("stage\\stage04.csv", 4);
 			break;
 		default:

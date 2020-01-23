@@ -12,7 +12,9 @@
 void TitleScene::Initialize()
 {
 	//タイトルの背景の画像読み込み
-	_titleImage = GraphFactory::Instance().LoadGraph("img\\title.png");
+
+	_titleImage = GraphFactory::Instance().LoadGraph("img\\clear.png");
+
 	//枠画像
 	_frameImage = GraphFactory::Instance().LoadGraph("img\\waku.png");
 	//SE読み込み
@@ -66,12 +68,17 @@ void TitleScene::Update()
 	}
 
 	//カーソルの描画
-	Renderer::Instance().DrawGraph(_frameImage, Vector2(WindowInfo::WindowWidth / 2 + 197, 268 + _cursorNumber * 138));
+	//Renderer::Instance().DrawGraph(_frameImage, Vector2(WindowInfo::WindowWidth / 2 + 197, 268 + _cursorNumber * 138));
+
+	Renderer::Instance().DrawGraph(_frameImage, Vector2(WindowInfo::WindowWidth / 2 - 162, 362 + _cursorNumber * 138));
+
 }
 
 //解放
 void TitleScene::Release()
 {
-	GraphFactory::Instance().EraseGraph("img\\title.png");
+
+	GraphFactory::Instance().EraseGraph("img\\clear.png");
+
 	GraphFactory::Instance().EraseGraph("img\\waku.png");
 }
