@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	//	Windowモードの設定とWindowタイトルを設定する
 	ChangeWindowMode(true);
-	SetMainWindowText("墨");
+	SetMainWindowText("おいこみ魚");
 
 	//	画面サイズを設定
 	SetGraphMode(WindowInfo::WindowWidth, WindowInfo::WindowHeight, 16);
